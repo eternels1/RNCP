@@ -36,6 +36,25 @@ public class HelloWorldServlet extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, 
 						HttpServletResponse response) throws ServletException, IOException {
+		if (request.getParameter("nom")==null) {
+			response.sendRedirect("index.html");}
+			
+			String nom= request.getParameter("nom");
+			String prenom= request.getParameter("prenom");
+			String email= request.getParameter("email");
+			
+			
+			response.setContentType("text/html");
+			PrintWriter pw= response.getWriter();
+			pw.println("<html>");
+			pw.println("<head><title>Bienvenue!</title></head>");
+			pw.println("<body><p>Bonjour "+nom+" "+prenom+" il est "+LocalDateTime.now()+
+					"<br/>Nous vbous souhaitons la bienvenue sur notre site<br/> Vous recevrez "
+					+ "notre spam sur "
+					+email+"<br/><a href='index.html'>Revenir au Formulaire</a></p></body>");
+			pw.println("</html>");
+			pw.close();
+			
 		
 	}
 
