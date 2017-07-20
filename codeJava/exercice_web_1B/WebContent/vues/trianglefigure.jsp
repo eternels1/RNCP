@@ -7,6 +7,8 @@
 <title>Voici la figure Carrée !</title>
 </head>
 <body>
-
+	<table>
+	<% int taille=(int)request.getAttribute("taillefigure");
+	 %></table>
 </body>
 </html>
