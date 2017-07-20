@@ -39,6 +39,7 @@ public class fabricationFigureServlet extends HttpServlet {
 			
 			try {
 				taillefigure= Integer.parseInt(request.getParameter("taille"));
+				
 			} catch (NumberFormatException e) {
 				getServletContext().getRequestDispatcher("/vues/erreurTaillePage.jsp")
 				   .forward(request, response);
