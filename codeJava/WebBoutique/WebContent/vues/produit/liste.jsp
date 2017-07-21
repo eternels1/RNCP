@@ -15,7 +15,7 @@
 	<h2>Liste des produits</h2>
 	<table class="table table-stripped">
 			<thead>
-		<tr><th>ID</th><th>NOM</th><th>PRIX</th><th>POIDS</th></tr>
+		<tr><th>ID</th><th>NOM</th><th>PRIX</th><th>POIDS</th><th>ACTIONS </th></tr>
 			</thead>
 			
 			<tbody>
@@ -30,20 +30,28 @@
 					<td><%= p.getNom() %></td>
 					<td><%= p.getPrix() %></td>
 					<td><%= p.getPoids() %></td>
+					<td>
+						<a href="ProduitEdit?produitId=<%= p.getId() %>"
+							class="btn btn-primary">Edition</a>
+							
+						<form method="POST" action="Produits" style="display: inline-block;">
+							<input type="hidden" 
+								   name="produitId"
+								   id="produitId"
+								   value="<%= p.getId()%>">
+							<button type="submit" class="btn btn-danger" >Supprimer</button>
+						</form>
+					</td>				
 				</tr>
 				
 				<%
 			}			
 			
-			%>
-			
-			
-			
-			</tbody>
-			
-			
-			
-	</table>
+			%>			
+			</tbody>			
+	</table>	
+	<a href="ProduitEdit" class="btn btn-success">Créer Produit</a>
+	<p>@copright khalidCorp</p>
 </div>
 </body>
 </html>

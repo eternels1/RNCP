@@ -53,8 +53,15 @@ public class ProduitsServlet extends HttpServlet {
 		}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		if (request.getParameter("produitId")==null) {
+			System.out.println("Pas d'id, pas de suppression...");
+			response.sendRedirect("Produits");
+			return;
+		}
+		produitDAO.deleteProduit(Integer.parseInt(request.getParameter("produitId")));
+		response.sendRedirect("Produits");
+		
+		
 	}
 
 }
