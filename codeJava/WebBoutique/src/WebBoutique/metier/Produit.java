@@ -4,17 +4,7 @@ public class Produit {
 	private int id;
 	private String nom;
 	private double prix;
-	private double poids;
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	private double poids;		
 	
 	public Produit() {this(0,"",0.0,0.0);}
 	public Produit(int id, String nom, double prix, double poids) {

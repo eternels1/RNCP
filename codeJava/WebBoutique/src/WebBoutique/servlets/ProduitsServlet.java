@@ -23,19 +23,13 @@ import WebBoutique.metier.Produit;
 public class ProduitsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	private ProduitDAO produitDAO;
-	 
-       
+	private ProduitDAO produitDAO;       
    
     public ProduitsServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
-
-	
-	
-
-	
+    
 	@Override
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
@@ -46,11 +40,9 @@ public class ProduitsServlet extends HttpServlet {
 				
 				request.setAttribute("produits", produitDAO.findAll());
 				getServletContext().getRequestDispatcher("/vues/produit/liste.jsp")
-									.forward(request, response);
-				
-				
-			
+									.forward(request, response);			
 		}
+	
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if (request.getParameter("produitId")==null) {

@@ -101,8 +101,7 @@ public class ProduitDAO {
 				insert_one_statement.setDouble(3, p.getPoids());
 				return insert_one_statement.executeUpdate();
 				
-			} catch (SQLException e) {e.printStackTrace();
-			}
+			} catch (SQLException e) {e.printStackTrace();}
 		}
 		else {
 			try {

@@ -2,7 +2,6 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,33 +19,39 @@
 			</thead>
 			
 			<tbody>
-			<c:forEach items="${produits}" var="p">
-			<tr>
-					<td><c:out value="${p.id}" /></td>
-					<td><c:out value="${p.nom}" /></td>
-					<td><c:out value="${p.prix}" /></td>
-					<td><c:out value="${p.poids}" /></td>
+			
+			<% 
+			List<Produit> produits= (List<Produit>)request.getAttribute("produits");
+			for( Produit p : produits) {
+				%>
+				
+				<tr>
+					<td><%= p.getId() %></td>
+					<td><%= p.getNom() %></td>
+					<td><%= p.getPrix() %></td>
+					<td><%= p.getPoids() %></td>
 					<td>
-						<a href="ProduitEdit?produitId=<c:out value='${p.id}' />"
+						<a href="ProduitEdit?produitId=<%= p.getId() %>"
 							class="btn btn-primary">Edition</a>
 							
 						<form method="POST" action="Produits" style="display: inline-block;">
 							<input type="hidden" 
 								   name="produitId"
 								   id="produitId"
-								   value="<c:out value='${p.id}' />">
+								   value="<%= p.getId()%>">
 							<button type="submit" class="btn btn-danger" >Supprimer</button>
 						</form>
 					</td>				
 				</tr>
-			</c:forEach>
-						
 				
-						
+				<%
+			}			
+			
+			%>			
 			</tbody>			
 	</table>	
 	<a href="ProduitEdit" class="btn btn-success">Créer Produit</a>
-<!-- 	<p>@copright khalidCorp</p> -->
+	<p>@copright khalidCorp</p>
 </div>
 </body>
 </html>
