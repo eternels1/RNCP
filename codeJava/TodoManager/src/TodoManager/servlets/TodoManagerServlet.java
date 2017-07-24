@@ -33,9 +33,21 @@ public class TodoManagerServlet extends HttpServlet {
 
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setAttribute("lstTaches", tacheDAO.findAll());
-		getServletContext().getRequestDispatcher("/vues/tache/listetache.jsp")
+		if (request.getParameter("filtre")!=null) {
+			String contexte=request.getParameter("filtre");
+		request.setAttribute("lstTaches", tacheDAO.findbyContexte(contexte));
+		}
+		else {
+			String tri=request.getParameter("tri");
+		tri = (tri == null)? "" : tri;
+		request.setAttribute("lstTaches", tacheDAO.findAll(tri));		
+		
+		}
+		
+		
+			getServletContext().getRequestDispatcher("/vues/tache/listetache.jsp")
 							.forward(request, response);
+		
 	}
 
 	
@@ -46,6 +58,7 @@ public class TodoManagerServlet extends HttpServlet {
 			return;
 		}
 		//faire le delete
+		tacheDAO.deleteTache(Integer.parseInt(request.getParameter("tacheId")));
 		response.sendRedirect("TodoManager");
 	}
 

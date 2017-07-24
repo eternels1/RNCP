@@ -14,7 +14,7 @@
 		<h2>Liste de Tache(s) à faire :</h2>
 		<table class="table table-stripped">
 			<thead>
-				<tr><th>ID</th><th>DESCRIPTION</th><th>PRIORITE</th><th>CONTEXTE</th><th>FINISHED</th></tr>
+				<tr><th>ID</th><th><a href="TodoManager?tri=description">DESCRIPTION</a></th><th><a href="TodoManager?tri=priorite">PRIORITE</a></th><th>CONTEXTE</th><th>FINISHED</th><th>ACTIONS</th></tr>
 			</thead>
 			
 			<tbody>
@@ -27,7 +27,7 @@
 						<td><%= t.getId() %></td>
 						<td><%= t.getDescription() %></td>
 						<td><%= t.getPriorite() %></td>
-						<td><%= t.getContexte() %></td>
+						<td><a href="TodoManager?filtre=<%= t.getContexte() %>"><%= t.getContexte() %></a></td>
 						<td><%= t.isFinished() %></td>
 						<td>
 							<a href="TacheEdit?tacheId=<%= t.getId() %>" class="btn btn-primary">Edition</a>
