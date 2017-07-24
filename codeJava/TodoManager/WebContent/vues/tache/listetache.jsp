@@ -47,6 +47,7 @@
 			</tbody>
 		</table>
 		<a href="TacheEdit" class="btn btn-success">Céer une Tache</a>
+		<a href="TodoManager" class="btn btn-success">Acceuil</a>
 
 </div>
 </body>
