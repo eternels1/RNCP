@@ -44,6 +44,40 @@
 				<result name="error">/film/notFound.jsp</result>	
 				<result name="success" type="redirect">/film</result>		
 		</action>
+		
+		
+<!-- 		action version model driven -->
+
+<action name="filmMD"
+				class="com.abarou.videoTech.actions.FilmActionMD"
+				method="listeFilm">
+		<result name="success">/film/listeMD.jsp</result>		
+		</action>
+		<action name="editMD"
+				class="com.abarou.videoTech.actions.FilmActionMD"
+				method="editerFilm">
+				<result name="error">/film/notFound.jsp</result>	
+		<result name="success">/film/formMD.jsp</result>		
+		</action>
+		<action name="createMD"
+				class="com.abarou.videoTech.actions.FilmActionMD"
+				method="creerFilm">
+			<result name="success">/film/formMD.jsp</result>		
+		</action>
+		<action name="deleteMD"
+				class="com.abarou.videoTech.actions.FilmActionMD"
+				method="deleteFilm">
+			<result name="success" type="redirect">/filmMD</result>			
+		</action>
+		<action name="saveMD"
+				class="com.abarou.videoTech.actions.FilmActionMD"
+				method="sauverFilm">
+				<result name="input">/film/formMD.jsp</result>
+				<result name="error">/film/notFound.jsp</result>	
+				<result name="success" type="redirect">/filmMD</result>		
+		</action>
+		
+		
     </package>
 
     <!-- Add addition packages and configuration here. -->

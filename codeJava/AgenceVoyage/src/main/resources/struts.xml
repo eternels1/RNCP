@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+    <constant name="struts.enable.DynamicMethodInvocation" value="false"/>
+    <constant name="struts.devMode" value="true"/>
+	<constant name="struts.action.extension" value=","/>
+    <constant name="struts.enable.SlashesInActionNames" value="true" />
+
+    <package name="default" namespace="/" extends="struts-default">
+
+        <default-action-ref name="index"/>
+
+        <action name="index" class="com.abarou.AgenceVoyage.actions.IndexAction" method="index" >
+            <result name="success">/index.jsp</result>
+        </action>
+
+
+
+<action name="voyage"
+				class="com.abarou.AgenceVoyage.actions.VoyageAction"
+				method="listeVoyage">
+		<result name="success">/voyage/listeVoyage.jsp</result>		
+		</action>
+		<action name="edit"
+				class="com.abarou.AgenceVoyage.actions.VoyageAction"
+				method="editerVoyage">
+				<result name="error">/voyage/notFound.jsp</result>	
+		<result name="success">/voyage/formVoyage.jsp</result>		
+		</action>
+		<action name="create"
+				class="com.abarou.AgenceVoyage.actions.VoyageAction"
+				method="creerVoyage">
+			<result name="success">/voyage/formVoyage.jsp</result>		
+		</action>
+		<action name="delete"
+				class="com.abarou.AgenceVoyage.actions.VoyageAction"
+				method="deleteVoyage">
+			<result name="success" type="redirect">/voyage</result>			
+		</action>
+		<action name="save"
+				class="com.abarou.AgenceVoyage.actions.VoyageAction"
+				method="sauverVoyage">
+				<result name="input">/voyage/formVoyage.jsp</result>
+				<result name="error">/voyage/notFound.jsp</result>	
+				<result name="success" type="redirect">/voyage</result>		
+		</action>
+
+
+
+
+    </package>
+
+    <!-- Add addition packages and configuration here. -->
+</struts>
