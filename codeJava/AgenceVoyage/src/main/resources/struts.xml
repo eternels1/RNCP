@@ -23,9 +23,10 @@
 				method="listeVoyage">
 		<result name="success">/voyage/listeVoyage.jsp</result>		
 		</action>
-		<action name="edit"
+		<action name="edit/*"
 				class="com.abarou.AgenceVoyage.actions.VoyageAction"
 				method="editerVoyage">
+				<param name="id">{1}</param>
 				<result name="error">/voyage/notFound.jsp</result>	
 		<result name="success">/voyage/formVoyage.jsp</result>		
 		</action>

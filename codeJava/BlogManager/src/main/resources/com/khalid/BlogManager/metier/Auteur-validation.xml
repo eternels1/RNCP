@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE validators PUBLIC "-//Apache Struts//XWork Validator 1.0.3//EN"
+ 				"http://struts.apache.org/dtds/xwork-validator-1.0.3.dtd">
+
+ <validators>
+ 	<field name="nom">
+ 		<field-validator type="requiredstring">
+ 			<param name="trim">true</param>
+ 			<message>le champs "Nom" doit etre rempli !</message>
+ 		</field-validator>
+ 		<field-validator type="stringlength">
+ 			<param name="minLength">2</param>
+ 			<param name="maxLength">100</param>
+ 			<param name="trim">true</param>
+ 			<message>le Nom doit faire entre ${minLength} et ${maxLength} caracteres</message>
+ 		</field-validator>
+ 		<field-validator type="regex">
+ 			<param name="regex"><![CDATA[([-a-zA-Z.' ]+)]]></param>
+ 			<message>Le Nom ne respecte pas le format ( Caractères Spéciaux non autorisés! ).</message>
+ 		</field-validator>
+ 	</field>
+ 	<field name="prenom">
+ 		<field-validator type="requiredstring">
+ 			<param name="trim">true</param>
+ 			<message>le champs "Prénom" doit etre rempli !</message>
+ 		</field-validator>
+ 		<field-validator type="stringlength">
+ 			<param name="minLength">2</param>
+ 			<param name="maxLength">100</param>
+ 			<param name="trim">true</param>
+ 			<message>le Prénom doit faire entre ${minLength} et ${maxLength} caracteres</message>
+ 		</field-validator>
+ 		<field-validator type="regex">
+ 			<param name="regex"><![CDATA[([-a-zA-Z.' ]+)]]></param>
+ 			<message>Le Prénom ne respecte pas le format ( Caractères Spéciaux non autorisés! ).</message>
+ 		</field-validator>
+ 	</field>
+ 	<field name="email">
+ 		<field-validator type="required">
+ 			<message>L'Email est requis</message>
+ 		</field-validator>
+ 		<field-validator type="email">
+ 			<message>L'Email ne respecte pas le bon Format!</message>
+ 		</field-validator>
+ 	</field> 	
+ </validators>

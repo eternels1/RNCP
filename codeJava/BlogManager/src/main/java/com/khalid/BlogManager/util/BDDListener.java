@@ -1,4 +1,4 @@
-package com.abarou.videoTech.util;
+package com.khalid.BlogManager.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,31 +7,29 @@ import java.sql.SQLException;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
-import com.abarou.AgenceVoyage.metier.Agence;
-import com.abarou.AgenceVoyage.metier.Voyage;
+import com.khalid.BlogManager.metier.Auteur;
+import com.khalid.BlogManager.metier.Post;
 
 import dao.GenericDAO;
 
 
 public class BDDListener implements ServletContextListener {
 
-    
     public BDDListener() {
         // TODO Auto-generated constructor stub
     }
 
 	
-    public void contextDestroyed(ServletContextEvent arg0)  { 
+    public void contextDestroyed(ServletContextEvent sce)  { 
          // TODO Auto-generated method stub
     }
 
-	
     public void contextInitialized(ServletContextEvent sce)  { 
     	System.out.println("initialisation connection base");
     	try {
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection connection = DriverManager.getConnection(
-					"jdbc:mysql://localhost:3306/agencevoyage",
+					"jdbc:mysql://localhost:3306/blogmanager",
 					"root",
 					"");
 			/*
@@ -41,16 +39,16 @@ public class BDDListener implements ServletContextListener {
 			sce.getServletContext().setAttribute("produitDAO", produitDAO);
 			*/
 			
-			GenericDAO<Voyage> voyageDAO = 
-					new GenericDAO.Builder<Voyage>(Voyage.class,
+			GenericDAO<Auteur> auteurDAO = 
+					new GenericDAO.Builder<Auteur>(Auteur.class,
 													connection,
 													"id")
 											.build();
-			sce.getServletContext().setAttribute("voyagesDAO", voyageDAO);
+			sce.getServletContext().setAttribute("auteurDAO", auteurDAO);
 			
-			GenericDAO<Agence> agenceDAO= 
-					new GenericDAO.Builder<Agence>(Agence.class,connection,"id").build();
-			sce.getServletContext().setAttribute("agenceDAO", agenceDAO);
+			GenericDAO<Post> postDAO= 
+					new GenericDAO.Builder<Post>(Post.class,connection,"id").build();
+			sce.getServletContext().setAttribute("postDAO", postDAO);
 			
 			
 			System.out.println("initialisation DAO terminée");
@@ -59,5 +57,6 @@ public class BDDListener implements ServletContextListener {
     	catch (SQLException e) {e.printStackTrace();}
     	
     }
+    
 	
 }

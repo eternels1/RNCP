@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+    <constant name="struts.enable.DynamicMethodInvocation" value="false"/>
+    <constant name="struts.devMode" value="true"/>
+	<constant name="struts.action.extension" value=","/>
+    <constant name="struts.enable.SlashesInActionNames" value="true" />
+
+    <package name="default" namespace="/" extends="struts-default">
+
+        <default-action-ref name="index"/>
+
+        <action name="index" class="com.khalid.BlogManager.actions.IndexAction" method="index" >
+            <result name="success">/index.jsp</result>
+        </action>
+
+
+
+
+		<action name="post"
+				class="com.khalid.BlogManager.actions.BlogManagerAction"
+				method="listePost">
+		<result name="success">/blogManager/listePosts.jsp</result>		
+		</action>
+		<action name="edit/*"
+				class="com.khalid.BlogManager.actions.BlogManagerAction"
+				method="editerPost">
+				<param name="id">{1}</param>
+				<result name="error">/voyage/notFound.jsp</result>	
+		<result name="success">/blogManager/formPost.jsp</result>		
+		</action>
+		<action name="create"
+				class="com.khalid.BlogManager.actions.BlogManagerAction"
+				method="creatPost">
+			<result name="success">/blogManager/formPost.jsp</result>		
+		</action>
+		<action name="delete"
+				class="com.khalid.BlogManager.actions.BlogManagerAction"
+				method="deletePost">
+			<result name="success" type="redirect">/post</result>			
+		</action>
+		<action name="save"
+				class="com.khalid.BlogManager.actions.BlogManagerAction"
+				method="sauverPost">
+				<result name="input">/blogManager/formPost.jsp</result>
+				<result name="error">/blogManager/notFound.jsp</result>	
+				<result name="success" type="redirect">/post</result>		
+		</action>
+
+
+		<action name="auteur"
+				class="com.khalid.BlogManager.actions.AuteurAction"
+				method="listeAuteur">
+		<result name="success">/blogManager/listeAuteur.jsp</result>		
+		</action>
+		<action name="deleteauteur"
+				class="com.khalid.BlogManager.actions.AuteurAction"
+				method="deleteAuteur">
+			<result name="success" type="redirect">/auteur</result>			
+		</action>
+		<action name="editauteur/*"
+				class="com.khalid.BlogManager.actions.AuteurAction"
+				method="editerAuteur">
+				<param name="id">{1}</param>
+				<result name="error">/blogManager/notFound.jsp</result>	
+		<result name="success">/blogManager/formAuteurs.jsp</result>		
+		</action>
+		<action name="save"
+				class="com.khalid.BlogManager.actions.AuteurAction"
+				method="sauverAuteur">
+				<result name="input">/blogManager/formPost.jsp</result>
+				<result name="error">/blogManager/notFound.jsp</result>	
+				<result name="success" type="redirect">/listeAuteur</result>		
+		</action>
+
+    </package>
+
+    <!-- Add addition packages and configuration here. -->
+</struts>

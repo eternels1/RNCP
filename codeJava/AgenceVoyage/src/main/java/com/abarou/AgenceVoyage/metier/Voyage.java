@@ -8,7 +8,14 @@ public class Voyage {
 	private String libelle;
 	private String destination;
 	private double prix;
-	private String agence;
+	private int agenceId;
+	private Agence agence;
+	public Agence getAgence() {
+		return agence;
+	}
+	public void setAgence(Agence agence) {
+		this.agence = agence;
+	}
 	private boolean passeport;
 	private Date dateDepart;
 	public Date getDateDepart() {return dateDepart;}
@@ -23,24 +30,25 @@ public class Voyage {
 	public String getDestination() {return destination;}
 	public void setDestination(String destination) {this.destination = destination;}
 	public double getPrix() {return prix;}
-	public void setPrix(double prix) {this.prix = prix;}
-	public String getAgence() {return agence;}
-	public void setAgence(String agence) {this.agence = agence;}
+	public void setPrix(double prix) {this.prix = prix;}	
+	public int getAgenceId() {return agenceId;}
+	public void setAgenceId(int agenceId) {this.agenceId = agenceId;}
 	public boolean isPasseport() {return passeport;}
 	public void setPasseport(boolean passeport) {this.passeport = passeport;}
-	public Voyage(int id, String libelle, String destination, double prix, String agence, boolean passeport) {
+	public Voyage(int id, String libelle, String destination, double prix, int agenceId, boolean passeport) {
 		setId(id);
 		setLibelle(libelle);
 		setDestination(destination);
 		setPrix(prix);
-		setAgence(agence);
+		setAgenceId(agenceId);
 		setPasseport(passeport);
+		setAgence(null);
 	}
 	public Voyage() {}
 	@Override
 	public String toString() {
 		return "Voyage [id=" + id + ", libelle=" + libelle + ", destination=" + destination + ", prix=" + prix
-				+ ", agence=" + agence + ", passeport=" + passeport + "]";
+				+ ", agenceId=" + agenceId + ", passeport=" + passeport + "]";
 	}
 	
 
