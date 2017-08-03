@@ -10,11 +10,13 @@
 </head>
 <body>
 
+<h2>Enregistrer l'Auteur :</h2>
+
 <s:form action="save" method="post">
 	<s:hidden name="id" />
-	<s:textfield name="nom" label="Nom de l'Auteur : " />
-	<s:textfield name="prenom" label="Prénom de l'Auteur : " />
-	<s:textfield name="email" label="Email de l'Auteur : " />
+	<s:textfield name="nom" label="Nom de l'Auteur  " />
+	<s:textfield name="prenom" label="Prénom de l'Auteur  " />
+	<s:textfield name="email" label="Email de l'Auteur  " />
 	<s:submit value="Sauver"/>
 </s:form>
 </body>

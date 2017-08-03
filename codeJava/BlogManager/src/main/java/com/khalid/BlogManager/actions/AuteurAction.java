@@ -60,6 +60,37 @@ public class AuteurAction extends ActionSupport
 		}		
 	}
 	
+	public String saveAuteur() {
+		
+		Auteur m=getModel();
+		log.info("Appel de saveAuteur() avec id = "+ m.getId());
+		
+		Auteur a=auteurDAO.findByCle(m.getId());
+		if (a==null &&m.getId()!=0) {
+			return ERROR;
+		}
+		else {
+			auteurDAO.save(m);
+			log.info("Auteur sauvé : "+m);
+			return SUCCESS;
+		}
+		
+	}
+	
+	public String createAuteur() {
+		
+		log.info("Appel de createAuteur()");
+		
+		Auteur m=getModel();
+		
+		m.setId(0);
+		m.setNom("nom de l'auteur...");
+		m.setPrenom("prénom de l'auteur...");
+		m.setEmail("email de l'auteur...");
+		
+		return SUCCESS;
+	}
+	
 	
 	@Override
 	public Auteur getModel() {

@@ -67,12 +67,17 @@
 				<result name="error">/blogManager/notFound.jsp</result>	
 		<result name="success">/blogManager/formAuteurs.jsp</result>		
 		</action>
+		<action name="create"
+				class="com.khalid.BlogManager.actions.AuteurAction"
+				method="createAuteur">
+			<result name="success">/blogManager/formAuteurs.jsp</result>		
+		</action>
 		<action name="save"
 				class="com.khalid.BlogManager.actions.AuteurAction"
-				method="sauverAuteur">
-				<result name="input">/blogManager/formPost.jsp</result>
+				method="saveAuteur">
+				<result name="input">/blogManager/formAuteurs.jsp</result>
 				<result name="error">/blogManager/notFound.jsp</result>	
-				<result name="success" type="redirect">/listeAuteur</result>		
+				<result name="success" type="redirect">/auteur</result>		
 		</action>
 
     </package>
