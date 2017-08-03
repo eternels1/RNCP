@@ -1,4 +1,4 @@
- package com.khalid.firstJpa.jpa;
+package com.khalid.simpleAssociation.jpa;
 
 import java.util.*;
 
@@ -7,7 +7,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
-import com.khalid.firstJpa.beans.*;
+import com.khalid.simpleAssociation.beans.*;
 
 public class JpaTest {
 
@@ -61,7 +61,7 @@ public class JpaTest {
 		tx.begin();
 		//----------------------------------------------------
 		
-	
+		
 		
 		//----------------------------------------------------
 		tx.commit();
