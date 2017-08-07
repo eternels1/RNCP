@@ -1,9 +1,11 @@
 package com.khalid.simpleAssociation.beans;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,7 +23,7 @@ public class Film {
 	@Temporal(TemporalType.DATE)
 	private Date dateFilm;
 	private int dureeMinutes;
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.EAGER)
 	private Set<Acteur> lstActeurs;
 	@ManyToOne
 	private Genre genreduFilm;
@@ -34,13 +36,18 @@ public class Film {
 	public void setDateFilm(Date dateFilm) {this.dateFilm = dateFilm;}
 	public int getDureeMinutes() {return dureeMinutes;}
 	public void setDureeMinutes(int dureeMinutes) {this.dureeMinutes = dureeMinutes;}
-	public Set<Acteur> getLstActeurs() {return lstActeurs;}
+	public Set<Acteur> getLstActeurs() {
+		if (lstActeurs==null) {
+			lstActeurs= new HashSet<>();
+		}
+		return lstActeurs;}
+	
 	public void setLstActeurs(Set<Acteur> lstActeurs) {this.lstActeurs = lstActeurs;}
 	public Genre getGenreduFilm() {return genreduFilm;}
 	public void setGenreduFilm(Genre genreduFilm) {this.genreduFilm = genreduFilm;}
 	
 	public Film() {}
-	public Film(int id, String titre, Date dateFilm, int dureeMinutes, Set<Acteur> lstActeurs, Genre genreduFilm) {
+	public Film(int id, String titre, Date dateFilm, int dureeMinutes) {
 		super();
 		this.id = id;
 		this.titre = titre;
