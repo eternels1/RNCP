@@ -44,6 +44,47 @@
 		<property name="difficulte" value="5.5"></property>
 
 </bean>
+<bean id="quete5" 
+	  class="com.khalid.springKamelot.beans.QueteEpique">
+	  <property name="description" value="manger un sanglier de la montagne de feu" />
+	  <property name="difficulte" value="4.5"/>
+</bean>
+
+<bean id="ecurie"
+	  class="com.khalid.springKamelot.beans.Ecurie">
+	  <property name="chevaux">
+	  	<list>
+	  		<bean class="com.khalid.springKamelot.beans.Cheval">
+	  			<constructor-arg index="0" value="tonerre" />
+	  		</bean>
+	  		<bean class="com.khalid.springKamelot.beans.Cheval">
+	  			<constructor-arg index="0" value="bourriquet" />
+	  		</bean>
+	  		<bean class="com.khalid.springKamelot.beans.Cheval">
+	  			<constructor-arg index="0" value="jolly jumper" />
+	  		</bean>
+	  		<bean class="com.khalid.springKamelot.beans.Cheval">
+	  			<constructor-arg index="0" value="tornado" />
+	  		</bean>
+	  	</list>
+	  </property>
+</bean>
+
+
+
+<bean id="karadoc"
+	  class="com.khalid.springKamelot.beans.ChevalierTableRonde">
+	  <constructor-arg index="0" value="karadoc"/>
+	  <property name="quete" ref="quete5"/>
+	  <property name="competence" value="6.5" />
+	  <property name="monture">
+	  		<bean class="com.khalid.springKamelot.beans.Cheval"
+	  			  factory-bean="ecurie"
+	  			  factory-method="fournirCheval" >
+	  		</bean>
+	  </property>
+</bean>
+
 <bean id="jacquouuille" 
 		class="com.khalid.springKamelot.beans.ChevalierBasic">
 		<constructor-arg index="0" value="jacquouuille"></constructor-arg>
@@ -56,5 +97,96 @@
 		<property name="quete" ref="quete4" />
 		<property name="competence" value="12.5"></property>
 </bean>
+
+<bean id="terminator" 
+	  class="com.khalid.springKamelot.beans.ChevalierBasique"
+	  lazy-init="true" >
+	  <constructor-arg index="0" value="terminator"/>
+	  <property name="quete" ref="quete3" />
+	  <property name="competence" value="8.5" />
+</bean>
+
+
+<bean id="lancelot" 
+	  class="com.khalid.springKamelot.beans.ChevalierTableRonde">
+	  <constructor-arg index="0" value="lancelot"/>
+	  <property name="quete" ref="quete4" />
+	  <property name="competence" value="9.5" />
+	  <property name="monture">
+	  		<bean class="com.khalid.springKamelot.beans.Cheval"
+	  			  factory-bean="ecurie"
+	  			  factory-method="fournirCheval" >
+	  		</bean>
+	  </property>
+</bean>
+
+<bean id="link" 
+	  class="com.khalid.springKamelot.beans.ChevalierTableRonde">
+	  <constructor-arg index="0" value="link"/>
+	  <property name="quete">
+	  		<bean class="com.khalid.springKamelot.beans.IQuete"
+	  				factory-bean="merlin"
+	  				factory-method="genererQuete"></bean>
+	  </property>
+	  <property name="competence" value="8.5" />
+	  <property name="monture">
+	  		<bean class="com.khalid.springKamelot.beans.Cheval"
+	  			  factory-bean="ecurie"
+	  			  factory-method="fournirCheval" >
+	  		</bean>
+	  </property>
+</bean>
+
+<bean id="merlin"
+		class="com.khalid.springKamelot.beans.Merlin">
+		<property name="actions">
+			<list>
+				<value>sauver</value>
+				<value>rapporter</value>
+				<value>escorter</value>
+				<value>purifier</value>
+				<value>trucider</value>
+			</list>
+		</property>
+		<property name="sujets">
+			<list>
+				<value>dame</value>
+				<value>princesse</value>
+				<value>dragon</value>
+				<value>tresor</value>
+				<value>chevalier</value>
+			</list>
+		</property>
+		<property name="qualificatifs">
+			<list>
+				<value>du lac</value>
+				<value>lambda</value>
+				<value>mystique</value>
+				<value>noir</value>
+				<value>mignon</value>
+			</list>
+		</property>
+
+
+</bean>
+<bean id="assurancetourix"
+		class="com.khalid.springKamelot.beans.Menestrel"></bean>
+		
+		<aop:config>
+			<aop:aspect ref="assurancetourix">
+				<aop:pointcut 
+				expression="execution(* com.khalid.springKamelot.beans.ChevalierTableRonde.partir*(..)) and target(bean)" 
+				id="avantQuete"/>
+				<aop:pointcut 
+				expression="execution(* com.khalid.springKamelot.beans.Chevalier*.partir*(..)) and target(bean)" 
+				id="apresQuete"/>
+				<aop:before method="chanterAvant" pointcut-ref="avantQuete" arg-names="bean"/>
+				  
+				<aop:after-returning method="chanterApres" pointcut-ref="apresQuete" arg-names="bean"/>
+				
+				
+			</aop:aspect>
+		
+		</aop:config>
 
 </beans>

@@ -1,0 +1,26 @@
+<div class="well">
+  <button class="btn btn-warning" (click)="nouveau()">nouveau produit</button>
+  <form (ngSubmit)="sauver(editProduit)">
+    <div class="form-group">
+      <label>Identifiant</label>
+      <input class="form-control"name="id" [(ngModel)]="editProduit.id" />
+    </div>
+    <div class="form-group">
+        <label>Nom</label>
+        <input class="form-control"name="nom" [(ngModel)]="editProduit.nom" />
+    </div>
+    <div class="form-group">
+        <label>Prix</label>
+        <input class="form-control"name="prix" [(ngModel)]="editProduit.prix" />
+    </div>
+    <div class="form-group">
+        <label>Poids</label>
+        <input class="form-control"name="poids" [(ngModel)]="editProduit.poids" />
+    </div>
+    <div class="form-group">
+      <label>Categorie</label>
+      <input class="form-control"name="categorie" [(ngModel)]="editProduit.categorie" />
+  </div>
+    <button class="btn btn-primary" type="submit">sauver produit</button>
+  </form>
+</div>

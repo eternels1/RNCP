@@ -1,0 +1,18 @@
+{
+  "name": "secondproject",
+  "version": "1.0.0",
+  "description": "mon deuxieme projet typoescript",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "tsc && concurrently \"tsc -w\" \"lite-server\" "
+  },
+  "author": "khalid",
+  "license": "ISC",
+  "dependencies": { },
+  "devDependencies": {
+    "typescript": "^2.4.2",
+    "concurrently": "^3.1.0",
+    "lite-server": "~2.3.0"
+  }
+}

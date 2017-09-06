@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+    <constant name="struts.enable.DynamicMethodInvocation" value="false"/>
+    <constant name="struts.devMode" value="true"/>
+	<constant name="struts.action.extension" value=","/>
+    <constant name="struts.enable.SlashesInActionNames" value="true" />
+
+    <package name="default" namespace="/" extends="json-default">
+ 	<default-action-ref name="index"/>
+ 	
+ 	
+		<action name="restfilms"
+				class="com.khalid.alloCine.actions.FilmAction"
+				method="restliste">
+				<result name="success" type="json">
+					<param name="root">
+					films
+					</param>
+					<param name="excludeProperties">.*realisateur.*,.*acteurs.*</param>
+					
+				</result>
+				</action>
+				
+				
+       
+
+        <action name="index" class="com.khalid.alloCine.actions.IndexAction" method="index" >
+            <result name="success">/index.jsp</result>
+        </action>
+        
+        
+        <action name="films"
+        		class="com.khalid.alloCine.actions.FilmAction"
+        		method="liste" >
+            <result name="success">/film/listeFilm.jsp</result>
+        </action>
+        
+        <action name="film/edit/*"
+        		class="com.khalid.alloCine.actions.FilmAction"
+        		method="edit" >
+        	<param name="id">{1}</param>
+            <result name="success">/film/editFilm.jsp</result>
+            <result name="error" type="redirect">/films</result>
+        </action>
+        
+        <action name="film/create"
+        		class="com.khalid.alloCine.actions.FilmAction"
+        		method="create" >
+            <result name="success">/film/editFilm.jsp</result>
+        </action>
+        <action name="film/save"
+        		class="com.khalid.alloCine.actions.FilmAction"
+        		method="save" >
+            <result name="success" type="redirect">/films</result>
+            <result name="input">/film/editFilm.jsp</result>
+        </action>
+        <action name="film/delete"
+        		class="com.khalid.alloCine.actions.FilmAction"
+        		method="delete" >
+            <result name="success" type="redirect">/films</result>
+        </action>
+        <action name="film/actremove/*/*"
+				class="com.khalid.alloCine.actions.FilmAction"
+				method="removeActeurFromFilm">
+				<param name="fid">{1}</param>
+				<param name="aid">{2}</param>
+			<result name="success" type="redirect">/film/edit/${pid}</result>
+		</action>
+		<action name="film/actadd/*/*"
+				class="com.khalid.alloCine.actions.FilmAction"
+				method="addActeurToFilm">
+				<param name="fid">{1}</param>
+				<param name="aid">{2}</param>
+			<result name="success" type="redirect">/film/edit/${pid}</result>
+		</action>
+
+    </package>
+
+    <!-- Add addition packages and configuration here. -->
+</struts>

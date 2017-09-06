@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+            http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+          http://www.springframework.org/schema/aop 
+            http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+          http://www.springframework.org/schema/util
+            http://www.springframework.org/schema/util/spring-util-4.0.xsd
+            http://www.springframework.org/schema/context
+			http://www.springframework.org/schema/context/spring-context-4.0.xsd
+			http://www.springframework.org/schema/tx
+           http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+           http://www.springframework.org/schema/mvc
+			http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd"
+			default-autowire="byName">
+
+<!-- la datasource, c.a.d notre connection avec la base de donnée -->
+<bean id="dataSource"
+	  class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	  <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+	  <property name="url" value="jdbc:mysql://localhost:3306/alloCine"/>
+	  <property name="username" value="root"/>
+	  <property name="password" value="" />
+</bean>
+
+<!--  bean spring responsable de l'initialisation et de la gestion
+ de l'entityManagerFactory et de fournir les EntityManager
+ au DAO qui en auront besoin -->
+<bean id="entityManagerFactory"
+  class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+  <property name="dataSource" ref="dataSource" />
+  <property name="jpaVendorAdapter">
+  	<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+  		<property name="databasePlatform"
+  				 value="org.hibernate.dialect.MySQL5InnoDBDialect"/>
+  		<property name="showSql" value="true"/>
+  	</bean>
+  </property>
+</bean>
+<context:component-scan base-package="com.khalid.alloCine.config"/>
+<!-- bean spring responsable de la gestion des transaction JPA pour nos
+DAO (grace a l'AOP, il ouvrira automatiquement les transaction la
+ou en a besoin!) -->
+<bean id="transactionManager"
+	  class="org.springframework.orm.jpa.JpaTransactionManager">
+	  <property name="entityManagerFactory" ref="entityManagerFactory"/>
+</bean>
+
+<!-- vas scanner automatiquement nos classes pour detecter
+ les entites (@entity, etc...) -->
+<bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+
+<!--  responsable de scanner automatiquement les annotation @transactionnal 
+ 	de nos DAO -->
+<tx:annotation-driven transaction-manager="transactionManager"/>
+
+<bean 	id="filmDAO"
+		class="com.khalid.alloCine.repositories.FilmDAO"/>
+<bean 	id="acteurDAO"
+		class="com.khalid.alloCine.repositories.ActeurDAO"/>
+<bean 	id="realisateurDAO"
+		class="com.khalid.alloCine.repositories.RealisateurDAO"/>
+<bean 	id="etiquetageDAO"
+		class="com.khalid.alloCine.repositories.EtiquetageDAO"/>
+	  
+</beans>
+

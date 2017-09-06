@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>My Second TypeScript</title>
+        <meta charset="UTF-8" />
+        <link rel="stylesheet" href="css/style.css" />
+        <script src="js/require.js"></script>
+        <script>
+            require(["./js/app"],function(module){
+                var app=new module.App();
+               
+                window.addEventListener("load",function(event){
+                    console.log("demarrage...");
+                    app.initPage();
+                })
+                //app.initPage();
+            });
+            </script>
+    </head>
+    <body>
+        <h2>Second TypeScript</h2>
+        <form>
+            id:<input type="number" name="idClient" id="idClient" /><br/>
+            nom:<input type="text" name="nomClient" id="nomClient" /><br/>
+            prenom:<input type="text" name="prenomClient" id="prenomClient" /><br/>
+            email:<input type="text" name="emailClient" id="emailClient" /><br/>
+        </form>
+        <button id="ajoutClient">ajouter</button>
+        <div id="listeClient"></div>
+    </body>
+</html>

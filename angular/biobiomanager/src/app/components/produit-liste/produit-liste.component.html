@@ -1,0 +1,27 @@
+<div class="panel">
+    <button class="btn btn-success" (click)="triPrix()">Trier par Catégorie</button>
+  <table class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>NOM</th>
+      <th>PRIX</th>
+      <th>POIDS</th>
+      <th>CATEGORIE</th>
+      <th>ACTIONS</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let p of produits | async">
+      <td>{{p.id}}</td>
+      <td>{{p.nom}}</td>
+      <td>{{p.prix}}</td>
+      <td>{{p.poids}}</td>
+      <td>{{p.categorie}}</td>
+      <td>
+        <button class="btn btn-danger" (click)="suppression(p.id)">Supprimer</button>
+        <button class="btn btn-success" (click)="edition(p.id)">Editer</button>
+      </td>
+    </tr>
+  </table>
+</div>

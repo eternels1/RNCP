@@ -1,0 +1,48 @@
+<form class="form-inline">
+  <div class="form-group">
+    <label>Recherche de profils :</label><br/>
+    <label>par Nom</label>
+    <input class="form-control"
+           name="searchterm"
+           (ngModel)="searchterm"
+           (ngModelChange)="searchChanged($event)"
+           />
+           <label>par Ville</label>
+           <input class="form-control"
+                  name="searchtermVille"
+                  (ngModel)="searchtermVille"
+                  (ngModelChange)="searchVilleChanged($event)"
+                  />
+  </div>
+</form>
+<div class="panel">
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th><button (click)="triage('nom')" >NOM</button></th>
+          <th>PRENOM</th>
+          <th><button (click)="triage('age')" >AGE</button></th>
+          <th>EMAIL</th>
+          <th><button (click)="triage('ville')" >VILLE</button></th>
+          <th>SEXE</th>
+          <th>ACTIONS</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let p of profils | async | triNom : varTri ">
+          <td>{{p.id}}</td>
+          <td>{{p.nom}}</td>
+          <td>{{p.prenom}}</td>
+          <td>{{p.age}}</td>
+          <td>{{p.email}}</td>
+          <td>{{p.ville}}</td>
+          <td>{{p.sexe}}</td>
+          <td>
+             <button class="btn btn-danger" (click)="suppression(p.id)">supprimer</button>
+             <button class="btn btn-success" routerLink='/edit/{{p.id}}'>editer</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>

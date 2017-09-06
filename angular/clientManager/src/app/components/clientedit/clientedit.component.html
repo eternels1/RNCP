@@ -1,0 +1,23 @@
+<div class="well">
+    <button class="btn btn-warning" (click)="nouveauClient()">Nouveau Client</button>
+  <form (ngSubmit)="sauverClient(editClient)">
+      <div class="form-group">
+          <label>Identifiant</label>
+          <input class="form-control" name="id" [(ngModel)]="editClient.id" />
+      </div>
+      <div class="form-group">
+          <label>Identifiant</label>
+          <input class="form-control" name="nom" [(ngModel)]="editClient.nom" />
+      </div>
+      <div class="form-group">
+          <label>Identifiant</label>
+          <input class="form-control" name="email" [(ngModel)]="editClient.email" />
+      </div>
+      <div class="form-group">
+          <label>Identifiant</label>
+          <input class="form-control" name="solde" [(ngModel)]="editClient.solde" />
+      </div>
+      <button class="btn btn-primary" type="submit">Sauver Client</button>
+  </form>
+
+</div>

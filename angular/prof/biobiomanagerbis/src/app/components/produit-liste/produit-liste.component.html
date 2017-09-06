@@ -1,0 +1,37 @@
+<form>
+  <div class="form-group">
+    <label>recherche de produits</label>
+    <input class="form-control"
+           name="searchterm"
+           (ngModel)="searchterm"
+           (ngModelChange)="searchChanged($event)"
+           />
+  </div>
+</form>
+<div class="panel">
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>NOM</th>
+          <th>PRIX</th>
+          <th>POIDS</th>
+          <th>CATEGORIE</th>
+          <th>ACTIONS</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let p of produits | async ">
+          <td>{{p.id}}</td>
+          <td>{{p.nom}}</td>
+          <td>{{p.prix}}</td>
+          <td>{{p.poids}}</td>
+          <td>{{p.categorie | majuscule }}</td>
+          <td>
+             <button class="btn btn-danger" (click)="suppression(p.id)">supprimer</button>
+             <button class="btn btn-success" routerLink='/edit/{{p.id}}'>editer</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>

@@ -28,8 +28,11 @@ public class SpringApp {
         
         IChevalier c2 = ctx.getBean("goedefrois", IChevalier.class);
         System.out.println(c2);
-        c2.partirEnQuete();
+        c2.partirEnQuete(); 
         
+        IChevalier c3 = ctx.getBean("link", IChevalier.class);
+        System.out.println(c3);
+        c3.partirEnQuete();
         
         input.nextLine();
 		System.out.println("--------------------------------------");
