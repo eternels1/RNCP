@@ -22,7 +22,7 @@ export class ProfilService {
 
    getProfilsObservable():Observable<Profil[]>{
      return this.profilsSubject.asObservable();
-   }
+   } 
    public setSearchTerm(searchterm:string){
      this.searchTerm=searchterm;
      this.refreshListe();

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<data>
+    <table name="produits">
+        <columns>
+            <column name="id" type="INT"/>
+            <column name="nom" type="VARCHAR"/>
+            <column name="prix" type="DOUBLE"/>
+            <column name="poids" type="DOUBLE"/>
+        </columns>
+        <row>
+            <cell name="id">1</cell>
+            <cell name="nom">steak de lama</cell>
+            <cell name="prix">39.99</cell>
+            <cell name="poids">0.75</cell>
+        </row>
+        <row>
+            <cell name="id">2</cell>
+            <cell name="nom">tofou tofu</cell>
+            <cell name="prix">56.55</cell>
+            <cell name="poids">1.5</cell>
+        </row>
+        <row>
+            <cell name="id">3</cell>
+            <cell name="nom">kinoa</cell>
+            <cell name="prix">42.35</cell>
+            <cell name="poids">6</cell>
+        </row>
+        <row>
+            <cell name="id">7</cell>
+            <cell name="nom">produit...test</cell>
+            <cell name="prix">0.001</cell>
+            <cell name="poids">0.001</cell>
+        </row>
+        <row>
+            <cell name="id">11</cell>
+            <cell name="nom">produit...</cell>
+            <cell name="prix">0.001</cell>
+            <cell name="poids">0.001</cell>
+        </row>
+        <row>
+            <cell name="id">12</cell>
+            <cell name="nom">produit...</cell>
+            <cell name="prix">0.001</cell>
+            <cell name="poids">0.001</cell>
+        </row>
+    </table>
+</data>

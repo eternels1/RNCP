@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Produit } from "../metier/Produit";
 import { Http } from "@angular/http";
-
 import { Observable } from "rxjs/Observable";
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { Subject } from "rxjs/Subject";

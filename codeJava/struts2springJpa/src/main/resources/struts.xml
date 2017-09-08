@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+    <constant name="struts.enable.DynamicMethodInvocation" value="false"/>
+    <constant name="struts.devMode" value="true"/>
+	<constant name="struts.action.extension" value=","/>
+    <constant name="struts.enable.SlashesInActionNames" value="true" />
+
+    <package name="default" namespace="/" extends="struts-default">
+
+        <default-action-ref name="index"/>
+
+        <action name="index" class="com.khalid.struts2springJpa.actions.IndexAction" method="index" >
+            <result name="success">/index.jsp</result>
+        </action>
+        <action name="produits" class="com.khalid.struts2springJpa.actions.ProduitAction"
+        		method="liste">
+        		<result name="success">/produit/liste.jsp</result>
+        </action>
+        <action name="produit/edit/*" class="com.khalid.struts2springJpa.actions.ProduitAction"
+        		method="edit">
+        		<param name="id">{1}</param>
+        		<result name="success">/produit/edit.jsp</result>
+        		<result name="error" type="redirect">/produits</result>
+        </action>
+        <action name="produit/create" class="com.khalid.struts2springJpa.actions.ProduitAction"
+        		method="create">
+        		<result name="success">/produit/edit.jsp</result>
+        </action>
+        <action name="produit/save" class="com.khalid.struts2springJpa.actions.ProduitAction"
+        		method="save">
+        		<result name="success" type="redirect">/produits</result>
+        </action>
+        <action name="produit/delete" class="com.khalid.struts2springJpa.actions.ProduitAction"
+        		method="delete">
+        		<result name="success" type="redirect">/produits</result>
+        </action>
+
+
+		<action name="categories" class="com.khalid.struts2springJpa.actions.CategorieAction"
+        		method="liste">
+        		<result name="success">/categorie/liste.jsp</result>
+        </action>
+        <action name="categorie/edit/*" class="com.khalid.struts2springJpa.actions.CategorieAction"
+        		method="edit">
+        		<param name="id">{1}</param>
+        		<result name="success">/categorie/edit.jsp</result>
+        		<result name="error" type="redirect">/produits</result>
+        </action>
+        <action name="categorie/create" class="com.khalid.struts2springJpa.actions.CategorieAction"
+        		method="create">
+        		<result name="success">/categorie/edit.jsp</result>
+        </action>
+        <action name="categorie/save" class="com.khalid.struts2springJpa.actions.CategorieAction"
+        		method="save">
+        		<result name="success" type="redirect">/categories</result>
+        </action>
+        <action name="categorie/delete" class="com.khalid.struts2springJpa.actions.CategorieAction"
+        		method="delete">
+        		<result name="success" type="redirect">/categories</result>
+        </action>
+
+
+
+
+    </package>
+
+    <!-- Add addition packages and configuration here. -->
+</struts>

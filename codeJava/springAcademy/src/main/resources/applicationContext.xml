@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+            http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+          http://www.springframework.org/schema/aop 
+            http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+          http://www.springframework.org/schema/util
+            http://www.springframework.org/schema/util/spring-util-4.0.xsd
+            http://www.springframework.org/schema/context
+			http://www.springframework.org/schema/context/spring-context-4.0.xsd
+			http://www.springframework.org/schema/tx
+           http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+           http://www.springframework.org/schema/mvc
+			http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd"
+			default-autowire="byName">
+
+<bean id="trompetteMagnifique"
+		class="com.khalid.springAcademy.beans.Trompette"
+		scope="prototype">
+		<property name="nom" value="trompetteMagnifique"/>
+
+</bean>
+<bean id="guitare"
+		class="com.khalid.springAcademy.beans.Guitare"	>
+		<property name="nom" value="guitare"/>
+
+</bean>
+<bean id="amstrong"
+		class="com.khalid.springAcademy.beans.Musicien">
+		<property name="nom" value="amstrong"></property>
+		<property name="instrument" ref="trompetteMagnifique"/>
+		
+</bean>
+
+<bean id="trompetiste"
+		class="com.khalid.springAcademy.beans.Musicien">
+		<property name="nom" value="trompetiste"></property>
+		<property name="instrument" ref="trompetteMagnifique"/>
+</bean>
+<bean id="catStevens"
+		class="com.khalid.springAcademy.beans.Musicien">
+		<property name="nom" value="catStevens"></property>
+		<property name="instrument" ref="guitare"/>
+</bean>
+<bean id="jobleur1"
+		class="com.khalid.springAcademy.beans.Jongleur">
+		<constructor-arg index="0" value="jobleur1"/>
+		<constructor-arg index="1" value="3"/>		
+</bean>
+<bean id="luthier" 
+		class="com.khalid.springAcademy.beans.Luthier">
+
+</bean>
+<bean id="bobleponge"
+		class="com.khalid.springAcademy.beans.HommeOrchestre">
+		<property name="nom" value="bob l'eponge"></property>
+		<property name="lstinstruments">
+			<list>
+				<bean class="com.khalid.springAcademy.beans.Trompette">
+				<property name="nom" value="trompetteacorde"></property>
+				</bean>
+				<ref bean="trompetteMagnifique"/>
+				<bean class="com.khalid.springAcademy.beans.Violon"
+					factory-bean="luthier" factory-method="genererViolon">				
+				</bean>
+				<ref bean="guitare"/>		
+			</list>
+		</property>
+</bean>
+
+
+
+<bean id="monPublic"
+		class="com.khalid.springAcademy.beans.LePublic"></bean>
+		<aop:config>
+			<aop:aspect ref="monPublic">
+			<aop:pointcut expression="execution(* com.khalid.springAcademy.beans.IArtiste.faire*(..)) and target(bean)" 
+							id="artiste"/>
+			
+							
+				<aop:before method="applaudirAvant" pointcut-ref="artiste" arg-names="bean"/>
+				
+				<aop:after-returning method="applaudirApres" pointcut-ref="artiste" arg-names="bean"/>
+			
+			</aop:aspect>
+		
+		</aop:config>
+
+
+</beans>

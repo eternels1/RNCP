@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+            http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+          http://www.springframework.org/schema/aop 
+            http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+          http://www.springframework.org/schema/util
+            http://www.springframework.org/schema/util/spring-util-4.0.xsd
+            http://www.springframework.org/schema/context
+			http://www.springframework.org/schema/context/spring-context-4.0.xsd
+			http://www.springframework.org/schema/tx
+           http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+           http://www.springframework.org/schema/mvc
+			http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd"
+			default-autowire="byName">
+			
+	<bean id="customconfig" class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+		<property name="customEditors">
+			<map>
+				<entry 	key="com.khalid.springEventExpression.beans.Adresse" 
+						value="com.khalid.springEventExpression.beans.AdresseEditor"/>
+			</map>
+		</property>
+	</bean>		
+<bean id="generator" 
+	  class="com.khalid.springEventExpression.beans.IDGenerator">
+	  <constructor-arg index="0" value="1" />	
+</bean>
+
+<util:list id="nomStars" value-type="java.lang.String">
+	<value>Willis.bruce</value>
+	<value>Russel.Kurt</value>
+	<value>Snipes.Wesley</value>
+	<value>Dwayne.Johnson</value>
+</util:list>
+
+<bean id="c1" class="com.khalid.springEventExpression.beans.Client">
+	<property name="id" value="#{generator.nextID()}" />
+	<property name="nom" value="#{nomStars[0]}" />
+	<property name="email" value="#{nomStars[0]+'@holywood.com'}" />
+	<property name="solde" value="600.0" />
+</bean>
+<bean id="c2" class="com.khalid.springEventExpression.beans.Client">
+	<property name="id" value="#{generator.nextID()}" />
+	<property name="nom" value="#{nomStars[1]}" />
+	<property name="email" value="#{nomStars[1]}@holywood.com" />
+	<property name="solde" value="1200.0" />
+</bean>
+
+<bean id="c3" class="com.khalid.springEventExpression.beans.Client">
+	<property name="id" value="#{generator.nextID()}" />
+	<property name="nom" value="#{nomStars[2]}" />
+	<property name="email"><null /></property>
+	<property name="solde" value="#{c2.solde*3.0}" />
+</bean>
+<bean id="c4" class="com.khalid.springEventExpression.beans.Client">
+	<property name="id" value="#{generator.nextID()}" />
+	<property name="nom" value="#{nomStars[3].toUpperCase()}" />
+	<property name="email" value="#{c3.email?.toUpperCase()}"></property>
+	<property name="solde" value="#{c2.solde*3.0}" />
+</bean>
+
+<bean id="c5" class="com.khalid.springEventExpression.beans.Client">
+	<property name="id" value="#{generator.nextID()}" />
+	<property name="nom" value="bob.eponge" />
+	<property name="email" value="#{c3.email?:'bob@eponge.com'}"></property>
+	<property name="solde" value="#{c2.solde*T(java.lang.Math).PI}" />
+</bean>
+
+<bean id="s1" class="com.khalid.springEventExpression.beans.Site">
+	<property name="id" value="#{generator.nextID()}" />
+	<property name="nom" value="Baker's Home" />
+	<property name="adresse">
+		<bean class="com.khalid.springEventExpression.beans.Adresse">
+		 	<property name="rue" value="221b baker street"/>
+		 	<property name="ville" value="Londres"/>
+		 	<property name="codepostal" value="1234567"/>
+		 	<property name="pays" value="Angleterre"/>		
+		</bean>
+	</property>
+</bean>
+<bean id="s2" class="com.khalid.springEventExpression.beans.Site">
+	<property name="id" value="#{generator.nextID()}" />
+	<property name="nom" value="Bome le legendaire" />
+	<property name="adresse" value="2 rue des ananas; bikinibottom; 47812; deepSea" />
+</bean>
+<bean 	id="ecouteur1"
+		class="com.khalid.springEventExpression.beans.EcouteurGeneral">
+		<property name="nom" value="ecouteur1"/>
+
+</bean>
+</beans>
