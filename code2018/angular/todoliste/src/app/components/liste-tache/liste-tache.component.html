@@ -1,0 +1,46 @@
+<app-search-tache></app-search-tache>
+
+<a routerLink='/edit/0' class="btn btn-primary">Nouvelle Tache</a>
+<p></p>
+<div class="well">
+
+<table class="table table-striped" border="1">
+
+  <thead >
+    <tr class="success">
+    <th class="text-center"><h4>Libellé</h4></th>
+    <th class="text-center"><h4>Description</h4></th>
+    <th class="text-center"><h4>Priorité</h4></th>
+    <th class="text-center"><h4>Date de Création</h4></th>
+    <th class="text-center"><h4>Date Limite</h4></th>
+    <th class="text-center"><h4>Contexte</h4></th>
+    <th class="text-center"><h4>Terminer</h4></th>
+    <th class="text-center"><h4>Actions</h4></th>
+  </tr>
+  </thead>
+
+  <tbody>
+    <tr  *ngFor="let tache of taches | async">
+      <td>{{tache.libelle}}</td>
+      <td>{{tache.description}}</td>
+      <td>{{tache.priorite}}</td>
+      <td>{{tache.dateCreation | date:'yyyy-MM-dd'}}</td>
+      <td>{{tache.dateLimite  | date:'yyyy-MM-dd'}}</td>
+      <td>{{tache.contexte}}</td>
+      <td>
+        <span *ngIf="tache.terminer" class="glyphicon glyphicon-ok"></span>
+        <span *ngIf="!tache.terminer" class="glyphicon glyphicon-remove"></span>
+      </td>
+
+      <td>
+        <a routerLink='/edit/{{tache.id}}' class="btn btn-success">Edition</a>
+        <button class="btn btn-danger" (click)="deleteTache(tache.id)">Suppression</button>
+      </td>
+
+
+    </tr>
+  </tbody>
+
+
+</table>
+</div>

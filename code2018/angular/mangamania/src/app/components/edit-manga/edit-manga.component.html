@@ -1,0 +1,28 @@
+<div class="well">
+
+  <form (ngSubmit)="sauverTache()">
+    <div class="form-groupe">
+      <label for="titre">Titre</label>
+      <input type="text" class="form-control" name="titre" [(ngModel)]="editedManga.titre"/>
+    </div>
+    <div class="form-groupe">
+        <label for="auteur">Auteur</label>
+        <input type="text" class="form-control" name="auteur" [(ngModel)]="editedManga.auteur"/>
+      </div>
+      <div class="form-groupe">
+          <label for="genre">Genre</label>
+          <input type="text" class="form-control" name="genre" [(ngModel)]="editedManga.genre"/>
+        </div>
+        <div class="form-groupe">
+            <label for="dateParution">Date de Parution</label>
+            <input type="date" class="form-control" name="dateParution" [ngModel]="editedManga.dateParution | date:'yyyy-MM-dd'"
+                                                                        (ngModelChange)="editedManga.dateParution=$event"/>
+          </div>
+          <div class="form-groupe">
+              <label for="rating">Note</label>
+              <input type="text" class="form-control" name="rating" [(ngModel)]="editedManga.rating"/>
+            </div>
+            <button class="btn btn-primary" type="submit">Sauver Manga</button>
+  </form>
+
+</div>

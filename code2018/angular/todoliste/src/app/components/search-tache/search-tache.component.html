@@ -1,0 +1,27 @@
+<div class="row">
+<div class="col-sm-6 col-md-6 col-xs-8">
+<form>
+
+  <div class="form-group">
+    <label for="searchTerm">Rechercher un Libellé: {{searchTerm}} </label>
+    <input type="text"
+            class="form-control"
+            name="searchTerm"
+            id="searchTerm"
+            [ngModel]="searchTerm"
+            (ngModelChange)="changeTerm($event)"/>
+  </div>
+
+</form>
+</div>
+<div class="col-sm-6 col-md-6 col-xs-4">
+    <div class="btn-group" dropdown>
+        <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle">
+          filtrer par priorite minimale <span class="caret"></span>
+        </button>
+        <ul *dropdownMenu class="dropdown-menu" role="menu">
+          <li *ngFor="let p of priorityChoices" role="menuitem"><a class="dropdown-item" (click)="setPriorite(p)">{{p}}</a></li>
+        </ul>
+      </div>
+</div>
+</div>

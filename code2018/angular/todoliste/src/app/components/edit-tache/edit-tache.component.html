@@ -1,0 +1,44 @@
+<div class="well">
+  <form (ngSubmit)="sauverTache()">
+    <div class="form-group">
+      <label for="libelle">Libellé</label>
+      <input type="text" class="form-control" name="libelle" 
+      [(ngModel)]="editedTache.libelle" />
+    </div>
+    <div class="form-group">
+      <label for="description">Description</label>
+      <input type="text" class="form-control" name="description" 
+      [(ngModel)]="editedTache.description" />
+    </div>
+    <div class="form-group">
+      <label for="priorite">Priorité</label>
+      <input type="number" class="form-control" name="priorite" 
+      [(ngModel)]="editedTache.priorite" />
+    </div>
+    <div class="form-group">
+      <label for="dateCreation">Date de Création</label>
+      <input type="date" class="form-control" name="dateCreation" 
+      [ngModel]="editedTache.dateCreation | date:'yyyy-MM-dd'" 
+      (ngModelChange)="editedTache.dateCreation=$event"/>
+    </div>
+    <div class="form-group">
+      <label for="dateLimite">Date Limite</label>
+      <input type="date" class="form-control" name="dateLimite" 
+      [ngModel]="editedTache.dateLimite | date:'yyyy-MM-dd'" 
+      (ngModelChange)="editedTache.dateLimite=$event"/>
+    </div>
+    <div class="form-group">
+      <label for="contexte">Contexte</label>
+      <input type="text" class="form-control" name="contexte" 
+      [(ngModel)]="editedTache.contexte" />
+    </div>
+    <div class="form-group">
+      <label for="terminer">Terminer</label>
+      <input type="checkbox" class="form-control" name="terminer" 
+      [(ngModel)]="editedTache.terminer" />
+    </div>
+
+    <button class="btn btn-primary" type="submit">Sauver Tache !</button>
+
+  </form>
+</div>
