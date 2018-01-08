@@ -12,7 +12,9 @@ import { MangaRepositoryService } from '../../services/manga-repository.service'
 export class SearchMangaComponent implements OnInit {
 
   public searchTerm: string;
-  
+  public ratingRange : number[]= Array.from({length:5},(value,key)=>key+1);
+  public currentRating: number;
+
   private searchTermSubject: Subject<string>;
 
 
@@ -20,10 +22,8 @@ export class SearchMangaComponent implements OnInit {
     this.searchTermSubject= new Subject();
   }
 
-
-
-
   ngOnInit() {
+    this.currentRating=0;
     this.searchTerm="ubunchu";
 
     this.searchTermSubject.asObservable()
@@ -31,6 +31,14 @@ export class SearchMangaComponent implements OnInit {
                           .subscribe(newTerm=> this._mangaRepository.changeSearch(newTerm));
   }
 
+  setRatingMin(rating : number): boolean{
+    console.log("change rating : " +rating);
+    if(rating!=this.currentRating){
+      this._mangaRepository.setFilterByRatingMin(rating);
+    }
+    this.currentRating=rating;
+    return false;//on ne suit pas le href dans le html
+  }
   changeTerm(evt) : void{
 
     this.searchTermSubject.next(evt);

@@ -1,28 +1,46 @@
 <div class="well">
-
-  <form (ngSubmit)="sauverTache()">
+<!-- le # permet de declarer une nouvelle variable automatiquement instencier
+le ngForm fournit bind cette variable à la validation du formulaire -->
+  <form novalidate #monform="ngForm" (ngSubmit)="sauverTache(monform)">
     <div class="form-groupe">
       <label for="titre">Titre</label>
-      <input type="text" class="form-control" name="titre" [(ngModel)]="editedManga.titre"/>
+      <input type="text" class="form-control" name="titre" 
+      [(ngModel)]="editedManga.titre"
+      required
+      minlength="3"/>
+      <ul *ngIf="monform.controls.titre?.errors && monform.controls.titre?.dirty">
+            <li *ngIf="monform.controls.titre.errors?.required">Le Titre est Requis!</li>
+            <li *ngIf="monform.controls.titre.errors?.minlength">Le Titre est trop court!</li>
+      </ul>
     </div>
     <div class="form-groupe">
         <label for="auteur">Auteur</label>
-        <input type="text" class="form-control" name="auteur" [(ngModel)]="editedManga.auteur"/>
+        <input type="text" class="form-control" name="auteur" 
+        [(ngModel)]="editedManga.auteur"
+        required
+        minlength="3"/>
       </div>
       <div class="form-groupe">
           <label for="genre">Genre</label>
-          <input type="text" class="form-control" name="genre" [(ngModel)]="editedManga.genre"/>
+          <input type="text" class="form-control" name="genre" 
+          [(ngModel)]="editedManga.genre"
+          minlength="4"/>
         </div>
         <div class="form-groupe">
             <label for="dateParution">Date de Parution</label>
-            <input type="date" class="form-control" name="dateParution" [ngModel]="editedManga.dateParution | date:'yyyy-MM-dd'"
-                                                                        (ngModelChange)="editedManga.dateParution=$event"/>
+            <input type="date" class="form-control" name="dateParution" 
+            [ngModel]="editedManga.dateParution | date:'yyyy-MM-dd'"                                                                        
+            (ngModelChange)="editedManga.dateParution=$event"
+            required/>
           </div>
           <div class="form-groupe">
               <label for="rating">Note</label>
-              <input type="text" class="form-control" name="rating" [(ngModel)]="editedManga.rating"/>
+              <input type="text" class="form-control" name="rating" 
+              [(ngModel)]="editedManga.rating"
+              required
+              pattern="^[0-5]$"/>
             </div>
-            <button class="btn btn-primary" type="submit">Sauver Manga</button>
+            <button [disabled]="monform.invalid" class="btn btn-primary" type="submit">Sauver Manga</button>
   </form>
 
 </div>

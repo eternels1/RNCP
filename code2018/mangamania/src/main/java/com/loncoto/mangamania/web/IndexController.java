@@ -3,6 +3,7 @@ package com.loncoto.mangamania.web;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import org.apache.logging.log4j.LogManager;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.servlet.ModelAndView;
@@ -50,9 +52,12 @@ public class IndexController {
 	
 	@RequestMapping(value="/pmangas", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public Page<Manga> listepManga(@PageableDefault(page=0,size=5)Pageable page){
-		
-		return mangaRepository.findAll(page);
+	public Page<Manga> listepManga(@PageableDefault(page=0,size=5)Pageable page,//on utilise optional pour permettre de ne pas recevoir de ratingMinimum s'il n'est pas fournis
+									@RequestParam("ratingMinimum")Optional<Integer> ratingMinimum){
+		if(ratingMinimum.isPresent())
+		return mangaRepository.findByRatingGreaterThanEqual(ratingMinimum.get(), page);
+		else
+			return mangaRepository.findAll(page);
 		
 	}
 	
@@ -65,8 +70,11 @@ public class IndexController {
 	
 	@RequestMapping(value="/pmangas/search/{search:.+}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public Page<Manga> searchpManga(@PathVariable("search") String search, @PageableDefault(page=0,size=5)Pageable page){
-		
+	public Page<Manga> searchpManga(@PathVariable("search") String search, @PageableDefault(page=0,size=5)Pageable page,
+									@RequestParam("ratingMinimum")Optional<Integer> ratingMinimum){
+		if(ratingMinimum.isPresent())
+			return mangaRepository.findByTitreContainingAndRatingGreaterThanEqual(search, ratingMinimum.get(), page);
+		else
 		return mangaRepository.findByTitreContaining(search,page);
 	}
 	

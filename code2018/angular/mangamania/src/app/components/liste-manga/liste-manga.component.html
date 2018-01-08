@@ -1,17 +1,19 @@
 
 <app-search-manga></app-search-manga>
 
+<h4></h4>
   <a routerLink='/edit/0' class="btn btn-primary">Nouveau Manga</a>  
 
 <table class="table table-striped">
 
-  <thead><th>Titre</th><th>Auteur</th><th>Date de Parution</th></thead>
+  <thead><th>Titre</th><th>Auteur</th><th>Date de Parution</th><th>Rating</th></thead>
 
   <tbody>
     <tr *ngFor="let manga of mangas | async">
     <td>{{manga.titre}}</td>
     <td>{{manga.auteur}}</td>
     <td>{{manga.dateParution | date:'yyyy-MM-dd'}}</td>
+    <td>{{manga.rating}}</td>
     <td>
       <a routerLink='/edit/{{manga.id}}' class="btn btn-success">Edition</a>
       <button class="btn btn-danger" (click)="deleteManga(manga.id)"> Suppression</button>

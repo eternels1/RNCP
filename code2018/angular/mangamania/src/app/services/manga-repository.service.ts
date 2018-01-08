@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Manga } from '../metier/manga';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Page } from '../metier/page';
 
 @Injectable()
@@ -11,17 +11,26 @@ export class MangaRepositoryService {
   
   private mangaSubject: BehaviorSubject<Page<Manga>>;
   private searchTitre: string; //recherche sur le titre
+  private filterByRatingMin: number;
 
+  private baseUrl: string="http://localhost:8080/mangamania/";
   private numPage:number;
+
   public setNumPage(num:number):void {
     this.numPage=num;
     this.refreshListe();
   }
+  public setFilterByRatingMin(rating: number) :void{
+    this.filterByRatingMin=rating;
+    this.refreshListe();
+  }
+
 
   constructor(private _http: HttpClient) {
     this.searchTitre="";
     this.mangaSubject= new BehaviorSubject(new Page([],0,0,5,0,1,true,false,null));
     this.numPage=0;
+    this.filterByRatingMin=0;
    }
 
    //méthode appelé si un composant veut modifier le filtrage de la liste des mangas en fonction du titre
@@ -42,19 +51,28 @@ export class MangaRepositoryService {
     //quand on recoi sa reponse, on republie les donnée dans le sujet 'mangasSubject'
     //ainsi tous ceux qui écoute le sujet mangasSubject recevrons la liste raffréchis
 
-    let url= "http://localhost:8080/mangamania/pmangas";
+    let url= `${this.baseUrl}pmangas`;
     if(this.searchTitre!="") {
       url+=`/search/${this.searchTitre}`;
     }
-    url+=`?page=${this.numPage}`;
-    this._http.get<Page<Manga>>(url)
+
+    //ATTENTION params est imutable !
+    //cet objet permet de déléguer à angular la construction de l'url après le ?
+    //autrement dit des query parameters
+    let params : HttpParams= new HttpParams();
+    params= params.set("page",""+this.numPage);
+    if(this.filterByRatingMin>0){
+      params=params.set("ratingMinimum",this.filterByRatingMin.toString());
+    } 
+    
+    this._http.get<Page<Manga>>(url,{params: params})
               .toPromise()
               .then(mangas=>this.mangaSubject.next(mangas))
               
    }
 
    public findManga(id: number) : Promise<Manga>{
-     let url=`http://localhost:8080/mangamania/mangas/${id}`;
+     let url=`${this.baseUrl}mangas/${id}`;
      return this._http.get<Manga>(url).toPromise();
    }
    public saveManga(manga : Manga): Promise<Manga>{
@@ -63,17 +81,17 @@ export class MangaRepositoryService {
      };
      if(manga.id==0){
        //insertion
-       return this._http.post<Manga>("http://localhost:8080/mangamania/mangas",manga,httpoptions).toPromise();
+       return this._http.post<Manga>(`${this.baseUrl}mangas`,manga,httpoptions).toPromise();
      }
      else{
        //update
-       return this._http.put<Manga>("http://localhost:8080/mangamania/mangas",manga,httpoptions).toPromise();
+       return this._http.put<Manga>(`${this.baseUrl}mangas`,manga,httpoptions).toPromise();
      }
      
    }
 
    public deleteManga(id: number) : Promise<Manga>{
-    let url=`http://localhost:8080/mangamania/mangas/${id}`;
+    let url=`${this.baseUrl}mangas/${id}`;
     return this._http.delete<Manga>(url).toPromise();
   }
 }

@@ -4,6 +4,7 @@ import{HttpClientModule} from '@angular/common/http';
 import{FormsModule} from '@angular/forms';
 import { RouterModule } from "@angular/router";
 import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 
 import { AppComponent } from './app.component';
@@ -26,6 +27,7 @@ import { EditMangaComponent } from './components/edit-manga/edit-manga.component
     PaginationModule.forRoot(),
     HttpClientModule,
     FormsModule,
+    BsDropdownModule.forRoot(),
     RouterModule.forRoot([
       {path:'liste', component:ListeMangaComponent},
       {path:'edit/:id', component:EditMangaComponent},
