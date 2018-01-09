@@ -28,6 +28,7 @@ export class SearchTacheComponent implements OnInit {
     this.searchTermSubject.asObservable()
                           .debounceTime(1000)
                           .subscribe(newTerm=> this._tacheRepository.chnageSearch(newTerm));
+    this._tacheRepository.chnageSearch("");
   }
 
   changeTerm(evt):void{

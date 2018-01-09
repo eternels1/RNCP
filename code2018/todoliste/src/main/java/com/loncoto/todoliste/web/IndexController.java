@@ -7,6 +7,9 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -36,17 +39,16 @@ public class IndexController {
 
 	@RequestMapping(value="/taches", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public List<Tache> listeTache(){
-		ArrayList<Tache> data= new ArrayList<>();
-		tacheRepository.findAll().forEach(tache -> data.add(tache));//-> pareil que tacheRepository.findAll().forEach(data::add);
-		return data;
+	public Page<Tache> listeTache(@PageableDefault(page=0,size=5)Pageable page){
+		return tacheRepository.findAll(page);
 	}
 	
 	@RequestMapping(value="/taches/search/{search:.+}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public List<Tache> searchTache(@PathVariable("search") String search){
+	public Page<Tache> searchTache(@PageableDefault(page=0,size=5)Pageable page,
+									@PathVariable("search") String search){
 		
-		return tacheRepository.findBylibelleContaining(search);
+		return tacheRepository.findBylibelleContaining(search,page);
 	}
 	
 	
@@ -54,9 +56,10 @@ public class IndexController {
 	
 	@RequestMapping(value="/taches/searchPriorite/{priorite:[0-9]+}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public List<Tache> searchTachePriorite(@PathVariable("priorite") int priorite){
+	public Page<Tache> searchTachePriorite(@PageableDefault(page=0,size=5)Pageable page,
+											@PathVariable("priorite") int priorite){
 		
-		return tacheRepository.findByprioriteGreaterThanEqual(priorite);
+		return tacheRepository.findByprioriteGreaterThanEqual(priorite,page);
 	}
 	/////////////////////////
 	

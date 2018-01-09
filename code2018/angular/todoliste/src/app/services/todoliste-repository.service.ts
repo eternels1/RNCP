@@ -1,22 +1,31 @@
 import { Injectable } from '@angular/core';
 import { Tache } from '../metier/tache';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient,HttpHeaders,HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { HttpHeaders } from '@angular/common/http';
+import { Page } from '../metier/page';
 
 
 @Injectable()
 export class TodolisteRepositoryService {
 
-  private tachesSubject: BehaviorSubject<Tache[]>;
+  private tachesSubject: BehaviorSubject<Page<Tache>>;
   private searchLibelle: string;
   private prioriteNumber: number;
+
+  private numPage:number;
+
+
+  public setNumPage(num:number){
+    this.numPage=num;
+    this.refreshListe();
+  }
 
   constructor(private _http: HttpClient) { 
     this.searchLibelle="";
     this.prioriteNumber=0;
-    this.tachesSubject= new BehaviorSubject([]);
+    this.numPage=0;
+    this.tachesSubject= new BehaviorSubject(new Page([],0,0,5,0,1,true,false,null));
   }
 
 
@@ -32,7 +41,7 @@ export class TodolisteRepositoryService {
   }
 
 
-  public listeTachesObservable(): Observable<Tache[]>{
+  public listeTachesObservable(): Observable<Page<Tache>>{
     return this.tachesSubject.asObservable();
   }
 
@@ -44,6 +53,8 @@ export class TodolisteRepositoryService {
 
     let url= "http://localhost:8080/todoliste/taches";
 
+    let params : HttpParams=new HttpParams();
+    params=params.set("page",""+this.numPage);
     if(this.searchLibelle!=""){
       url+=`/search/${this.searchLibelle}`;
     }
@@ -52,7 +63,7 @@ export class TodolisteRepositoryService {
       url+=`/searchPriorite/${this.prioriteNumber}`;
     }
     
-    this._http.get<Tache[]>(url)
+    this._http.get<Page<Tache>>(url,{"params":params})
               .toPromise()
               .then(taches=>this.tachesSubject.next(taches))
 

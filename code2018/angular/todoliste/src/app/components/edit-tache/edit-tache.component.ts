@@ -18,7 +18,7 @@ export class EditTacheComponent implements OnInit {
 
   ngOnInit() {
 
-    this.editedTache=new Tache(0,"Libellé","Description",5,new Date(),new Date(),"contexte",false);
+    this.editedTache=new Tache(0,"","Description",5,new Date(),new Date(),"contexte",false);
     this.activeRoute.params.subscribe(params=>{
 
       let id=params["id"];

@@ -90,7 +90,7 @@ public class IndexController {
 		Manga m= mangaRepository.findOne(manga.getId());
 		if(m==null)
 			throw new HttpClientErrorException(HttpStatus.NOT_FOUND,"manga inconnu");
-		return mangaRepository.save(manga);
+		return mangaRepository.save(manga); 
 	}
 	
 	@RequestMapping(value="/mangas/{id:[0-9]+}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)

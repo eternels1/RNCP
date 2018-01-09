@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Tache } from '../../metier/tache';
 import { TodolisteRepositoryService } from '../../services/todoliste-repository.service';
+import { Subject } from 'rxjs/Subject';
+import { Page } from '../../metier/page';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-liste-tache',
@@ -10,14 +13,23 @@ import { TodolisteRepositoryService } from '../../services/todoliste-repository.
 })
 export class ListeTacheComponent implements OnInit {
 
-  public taches: Observable<Tache[]>;
+  public taches: Subject<Tache[]>;
+  public tacheSubscription: Subscription;
+  public totalItemsPage:number;
+  public currentPage:number;
 
   constructor(private _tacheRepository: TodolisteRepositoryService) { }
 
   ngOnInit() {
 
-    //j'écoute la liste des mangas
-   this.taches=this._tacheRepository.listeTachesObservable();
+    this.taches=new Subject();
+   this.tacheSubscription=this._tacheRepository.listeTachesObservable().subscribe(page=>{
+            this.totalItemsPage=page.totalElements;
+            this.currentPage=page.number+1;
+            this.taches.next(page.content);
+          })
+   
+          //j'écoute la liste des mangas
    //je demande au service de raffrechir la liste à partir du backend rest
    this._tacheRepository.refreshListe();
 
@@ -28,6 +40,10 @@ export class ListeTacheComponent implements OnInit {
       console.log("Tache effacé : "+ t.id);
       this._tacheRepository.refreshListe();
     })
+  }
+
+  public pageChanged(event:any):void{
+    this._tacheRepository.setNumPage(event.page -1);
   }
 
 }

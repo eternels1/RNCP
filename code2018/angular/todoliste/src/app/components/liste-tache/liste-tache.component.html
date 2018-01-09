@@ -43,4 +43,14 @@
 
 
 </table>
+<pagination [boundaryLinks]="true" 
+            [totalItems]="totalItemsPage" 
+            [ngModel]="currentPage" 
+            [itemsPerPage]="5"
+            class="pagination-sm"
+            previousText="&lsaquo;" 
+            nextText="&rsaquo;" 
+            firstText="&laquo;" 
+            lastText="&raquo;"
+            (pageChanged)="pageChanged($event)"></pagination>
 </div>
