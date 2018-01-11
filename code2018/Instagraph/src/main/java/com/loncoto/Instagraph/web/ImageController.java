@@ -6,6 +6,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.apache.commons.codec.digest.DigestUtils;
@@ -13,11 +17,15 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -39,7 +47,7 @@ public class ImageController {
 
 		
 	@RequestMapping(value="/upload",method=RequestMethod.POST,produces=MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
+	@ResponseBody@CrossOrigin(origins="http://localhost:4200")
 	public Image upload(@RequestParam("file")MultipartFile file) {
 		log.info("filename :" +file.getOriginalFilename());
 		log.info("content type :"+file.getContentType());
@@ -50,10 +58,11 @@ public class ImageController {
 				LocalDateTime.now(),
 				file.getOriginalFilename(),
 				file.getContentType(),
-				0,
+				file.getSize(),				
 				0,
 				0,
 				DigestUtils.sha1Hex(file.getInputStream()),//somme de controle de fichier
+				"",
 				"");
 		
 			
@@ -96,4 +105,79 @@ public class ImageController {
 		
 		return re;
 	}
+	
+	
+	@RequestMapping(value="/downloadThumb/{id:[0-9]+}",method=RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<FileSystemResource> imageDataThumb(@PathVariable("id")long id){
+		Image img = imageRepository.findOne(id);
+		if (img==null) {
+			throw new HttpClientErrorException(HttpStatus.NOT_FOUND,"image inconnue");
+		}
+		Optional<File> fichier= imageRepository.getImageFile(img.getThumbStorageId());
+		
+		if (!fichier.isPresent()) {
+			throw new HttpClientErrorException(HttpStatus.NOT_FOUND,"fichier image introuvale");
+		}
+		
+		ResponseEntity<FileSystemResource> re;
+		
+			HttpHeaders headers= new HttpHeaders();
+			headers.setContentType(MediaType.IMAGE_JPEG);
+			headers.setContentLength(fichier.get().length());
+			headers.setContentDispositionFormData("attachement", img.getFileName());
+			
+			re = new ResponseEntity<FileSystemResource>(new FileSystemResource(fichier.get()),
+																		headers,
+																		HttpStatus.ACCEPTED);
+		
+		return re;
+	}
+	
+	@CrossOrigin(origins="http://localhost:4200")
+	@RequestMapping(value="/findbytag", method=RequestMethod.GET,
+					produces=MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public Page<Image> findByTags(@RequestParam("tagsId") Optional <List<Integer>> tagsId,
+									@PageableDefault(page=0,size=12)Pageable page){
+		if (tagsId.isPresent()) {
+			log.info("tagsId= "+ tagsId.get().toString());
+		}
+		else
+		log.info("pas de tags en parametres");
+		
+		return imageRepository.findAll(page);
+	}
+	
+	
+	@ResponseBody@CrossOrigin(origins="http://localhost:4200")
+	@RequestMapping(value="/delete",
+					method=RequestMethod.DELETE,
+					produces=MediaType.APPLICATION_JSON_VALUE)
+	public Map<String, Object> deleteImages(@RequestParam("imagesId") List<Long> imagesId){
+		
+		Map<String, Object> result = new HashMap<>();
+		Iterable<Image> images=imageRepository.findAll(imagesId);
+		//efface les images dans la bdd
+		imageRepository.delete(images);
+		
+		int nbImagesToDelete=0;
+		int nbFilesDeleted=0;
+		//efface les fichiers immages correspondants
+		for (Image img : images) {
+			nbImagesToDelete++;
+			if(imageRepository.deleteImageFile(img))
+				nbFilesDeleted++;
+		}
+		
+		//retourner les infos sur ce qui a été fait
+		result.put("nbToDelete", nbImagesToDelete);
+		result.put("nbFilesDeleted", nbFilesDeleted);
+			
+		return result;
+
+	}
+	
+	
+	
 }

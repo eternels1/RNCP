@@ -78,5 +78,25 @@ public class FileStorageManager {
 			
 			else return Optional.empty();
 	}
+	
+	public boolean deleteImageFile(String storageId) {
+		if (storageRoot==null || !storageRoot.exists() || !storageRoot.isDirectory()) {
+			return false;
+		}
+		
+		//on récupére un objet file sur le repertoire ou on stocke l'image 
+		File rep=Paths.get(storageRoot.getAbsolutePath(),storageId.substring(0, 2)).toFile();
+		if (!rep.exists()|| !rep.isDirectory()) {
+			return false;
+		}
+		
+		File f =Paths.get(rep.getAbsolutePath(), storageId).toFile();
+		if (f!=null&&f.exists()&& f.isFile()) {
+			return f.delete();
+			
+		}
+		
+		else return false;
+	}
 
 }
