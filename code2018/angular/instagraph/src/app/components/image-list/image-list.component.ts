@@ -40,6 +40,14 @@ export class ImageListComponent implements OnInit, OnDestroy {
     return this.imagereporsitory.getImageUrl(id);
   }
 
+  public getImagePopoverText(image:Image):string{
+    if (image.tags==null || image.tags.length==0){
+      return "aucun tags";
+    }
+    else{
+      return "tags: " + image.tags.map(t=>t.libelle).join(",");
+    }
+  }
   ngOnInit() {
     this.images=new Subject();
     this.souscription=this.imagereporsitory.listeImageAsObservable()

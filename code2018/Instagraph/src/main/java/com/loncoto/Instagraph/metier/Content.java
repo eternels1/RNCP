@@ -12,6 +12,8 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,7 +28,7 @@ public class Content {
 	private String name;
 	private String description;
 	private LocalDateTime dateAdded;
-	@ManyToMany
+	@ManyToMany@JsonIgnore
 	private Set<Tag> tags;
 	
 	public Set<Tag> getTags(){

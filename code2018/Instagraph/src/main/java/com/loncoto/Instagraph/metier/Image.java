@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,11 +21,11 @@ public class Image extends Content {
 	private long fileSize;
 	private int width;
 	private int height;
-	@Column(length=80)
+	@Column(length=80)@JsonIgnore	
 	private String fileHash;
-	@Column(length=60)
+	@Column(length=60)@JsonIgnore	
 	private String storageId;
-	@Column(length=60)
+	@Column(length=60)@JsonIgnore	
 	private String thumbStorageId;
 	
 	

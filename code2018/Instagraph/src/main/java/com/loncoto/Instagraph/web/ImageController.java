@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.projection.ProjectionFactory;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -35,6 +36,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.loncoto.Instagraph.metier.Image;
+import com.loncoto.Instagraph.metier.projections.ImageWithTags;
 import com.loncoto.Instagraph.repositories.ImageRepository;
 import com.loncoto.Instagraph.util.FileStorageManager;
 
@@ -44,7 +46,14 @@ public class ImageController {
 	private static Logger log = LogManager.getLogger(ImageController.class);
 	@Autowired
 	private ImageRepository imageRepository;
+	private final ProjectionFactory projectionFactory;
+	
+	@Autowired
+	public ImageController(ProjectionFactory projectionFactory) {
+		this.projectionFactory=projectionFactory;
 
+	}
+	
 		
 	@RequestMapping(value="/upload",method=RequestMethod.POST,produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody@CrossOrigin(origins="http://localhost:4200")
@@ -148,6 +157,28 @@ public class ImageController {
 		
 		return imageRepository.findAll(page);
 	}
+	
+	
+	@CrossOrigin(origins="http://localhost:4200")
+	@RequestMapping(value="/findbytagfull", method=RequestMethod.GET,
+					produces=MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public Page<ImageWithTags> findByTagsFull(@RequestParam("tagsId") Optional <List<Integer>> tagsId,
+									@PageableDefault(page=0,size=12)Pageable page){
+		if (tagsId.isPresent()) {
+			log.info("tagsId= "+ tagsId.get().toString());
+			return imageRepository.searchwithTags(tagsId.get(), null, page)
+									.map(img-> projectionFactory.createProjection(ImageWithTags.class,img));
+			
+		}
+		else
+		log.info("pas de tags en parametres");
+		
+		return imageRepository.findAll(page).map(img-> projectionFactory.createProjection(ImageWithTags.class,img));
+	}
+	
+	
+	
 	
 	
 	@ResponseBody@CrossOrigin(origins="http://localhost:4200")

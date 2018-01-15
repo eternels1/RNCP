@@ -1,0 +1,19 @@
+input.ng-invalid.ng-dirty{
+    background-color:brown;
+}
+input.ng-invalid.ng-pristine{
+    background-color:burlywood;
+}
+
+/* style de la zone de drop des fichiers */
+div.my-drop-zone {
+    border: 2px dashed blue;
+    width: 200px;
+    height: 200px;
+    background-color: cadetblue
+}
+ 
+/* style quand on peut droper un fichier */
+div.file-over {
+    background-color: chartreuse
+}

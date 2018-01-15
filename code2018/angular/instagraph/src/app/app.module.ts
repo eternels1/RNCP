@@ -10,6 +10,7 @@ import { ProgressbarModule } from "ngx-bootstrap/progressbar";
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { LightboxModule } from 'angular2-lightbox';
 import { NgStringPipesModule,NgMathPipesModule } from 'angular-pipes';
+import { PopoverModule } from "ngx-bootstrap/popover";
 
 
 
@@ -19,6 +20,7 @@ import { ImageListComponent } from './components/image-list/image-list.component
 import { TagSelectorComponent } from './components/tag-selector/tag-selector.component';
 import { ImageRepositoryService } from './services/image-repository.service';
 import { ImageUploadComponent } from './components/image-upload/image-upload.component';
+import { TagRepositoryService } from './services/tag-repository.service';
 
 
 @NgModule({
@@ -31,6 +33,7 @@ import { ImageUploadComponent } from './components/image-upload/image-upload.com
   ],
   imports: [
     BrowserModule,
+    PopoverModule.forRoot(),
     HttpClientModule,
     FileUploadModule,
     FormsModule,
@@ -46,7 +49,7 @@ import { ImageUploadComponent } from './components/image-upload/image-upload.com
       {path:'',redirectTo:'/liste',pathMatch:'full'}
     ])
   ],
-  providers: [ImageRepositoryService],
+  providers: [ImageRepositoryService,TagRepositoryService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
