@@ -1,4 +1,4 @@
-package com.loncoto.firstSecurity.metier;
+package com.loncoto.Instagraph.metier;
 
 import java.util.HashSet;
 import java.util.Set;

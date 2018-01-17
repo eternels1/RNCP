@@ -1,4 +1,4 @@
-package com.loncoto.firstSecurity.security;
+package com.loncoto.Instagraph.security;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -7,7 +7,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.loncoto.firstSecurity.metier.Utilisateur;
+import com.loncoto.Instagraph.metier.Utilisateur;
+
 
 
 public class MyUserDetails implements UserDetails {
@@ -26,7 +27,7 @@ public class MyUserDetails implements UserDetails {
 	@Override
 	public String getPassword() {return this.utilisateur.getPassword();}
 	@Override
-	public String getUsername() {return this.utilisateur.getUserName();}
+	public String getUsername() {return this.utilisateur.getUsername();}
 	@Override
 	public boolean isAccountNonExpired() {return true;}
 	@Override

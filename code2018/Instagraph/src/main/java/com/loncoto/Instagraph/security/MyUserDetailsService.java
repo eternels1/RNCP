@@ -1,4 +1,4 @@
-package com.loncoto.firstSecurity.security;
+package com.loncoto.Instagraph.security;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -10,7 +10,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.loncoto.firstSecurity.metier.Utilisateur;
+import com.loncoto.Instagraph.metier.Utilisateur;
+
 
 
 @Service
@@ -24,7 +25,7 @@ public class MyUserDetailsService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		TypedQuery<Utilisateur> q=
 				em.createQuery("select u from Utilisateur as u left join fetch u.roles "
-							+ "where u.userName=:username", Utilisateur.class);
+							+ "where u.username=:username", Utilisateur.class);
 		q.setParameter("username", username);
 		Utilisateur u = q.getSingleResult();
 		if (u==null) {

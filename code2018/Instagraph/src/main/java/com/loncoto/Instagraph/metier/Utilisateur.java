@@ -1,4 +1,4 @@
-package com.loncoto.firstSecurity.metier;
+package com.loncoto.Instagraph.metier;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -22,10 +22,10 @@ import lombok.ToString;
 public class Utilisateur {
 	
 	
-	public Utilisateur(int id, String userName, String password, boolean enabled) {
+	public Utilisateur(int id, String username, String password, boolean enabled) {
 		super();
 		this.id = id;
-		this.userName = userName;
+		this.username = username;
 		this.password = password;
 		this.enabled = enabled;
 	}
@@ -33,7 +33,7 @@ public class Utilisateur {
 	@Id@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	@Column(length=100,nullable=false,unique=true)
-	private String userName;
+	private String username;
 	@JsonIgnore
 	private String password;
 	private boolean enabled;

@@ -25,6 +25,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -57,6 +58,7 @@ public class ImageController {
 		
 	@RequestMapping(value="/upload",method=RequestMethod.POST,produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody@CrossOrigin(origins="http://localhost:4200")
+	@PreAuthorize("hasRole('ROLE_USER')")
 	public Image upload(@RequestParam("file")MultipartFile file) {
 		log.info("filename :" +file.getOriginalFilename());
 		log.info("content type :"+file.getContentType());
@@ -90,6 +92,7 @@ public class ImageController {
 	
 	@RequestMapping(value="/download/{id:[0-9]+}",method=RequestMethod.GET)
 	@ResponseBody
+	@PreAuthorize("permitAll")
 	public ResponseEntity<FileSystemResource> imageData(@PathVariable("id")long id){
 		Image img = imageRepository.findOne(id);
 		if (img==null) {
@@ -118,6 +121,7 @@ public class ImageController {
 	
 	@RequestMapping(value="/downloadThumb/{id:[0-9]+}",method=RequestMethod.GET)
 	@ResponseBody
+	@PreAuthorize("permitAll")
 	public ResponseEntity<FileSystemResource> imageDataThumb(@PathVariable("id")long id){
 		Image img = imageRepository.findOne(id);
 		if (img==null) {
@@ -163,6 +167,7 @@ public class ImageController {
 	@RequestMapping(value="/findbytagfull", method=RequestMethod.GET,
 					produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
+	@PreAuthorize("hasRole('ROLE_USER')")
 	public Page<ImageWithTags> findByTagsFull(@RequestParam("tagsId") Optional <List<Integer>> tagsId,
 									@PageableDefault(page=0,size=12)Pageable page){
 		if (tagsId.isPresent()) {
@@ -185,6 +190,7 @@ public class ImageController {
 	@RequestMapping(value="/delete",
 					method=RequestMethod.DELETE,
 					produces=MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public Map<String, Object> deleteImages(@RequestParam("imagesId") List<Long> imagesId){
 		
 		Map<String, Object> result = new HashMap<>();
