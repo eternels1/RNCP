@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule} from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS} from "@angular/common/http";
 import { FormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 
@@ -11,7 +11,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { LightboxModule } from 'angular2-lightbox';
 import { NgStringPipesModule,NgMathPipesModule } from 'angular-pipes';
 import { PopoverModule } from "ngx-bootstrap/popover";
-
+import { AuthInterceptorService } from "./services/auth-interceptor.service";
 
 
 import { AppComponent } from './app.component';
@@ -21,6 +21,8 @@ import { TagSelectorComponent } from './components/tag-selector/tag-selector.com
 import { ImageRepositoryService } from './services/image-repository.service';
 import { ImageUploadComponent } from './components/image-upload/image-upload.component';
 import { TagRepositoryService } from './services/tag-repository.service';
+import { LoginComponent } from './components/login/login.component';
+import { AuthManagerService } from './services/auth-manager.service';
 
 
 @NgModule({
@@ -29,7 +31,8 @@ import { TagRepositoryService } from './services/tag-repository.service';
     NavBarComponent,
     ImageListComponent,
     TagSelectorComponent,
-    ImageUploadComponent
+    ImageUploadComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -46,10 +49,17 @@ import { TagRepositoryService } from './services/tag-repository.service';
     RouterModule.forRoot([
       {path:'liste',component:ImageListComponent},
       {path:'upload',component:ImageUploadComponent},
+      {path:'login',component:LoginComponent},
       {path:'',redirectTo:'/liste',pathMatch:'full'}
     ])
   ],
-  providers: [ImageRepositoryService,TagRepositoryService],
+  providers: [ImageRepositoryService,TagRepositoryService,AuthManagerService,
+              {
+                provide:HTTP_INTERCEPTORS,
+                useClass: AuthInterceptorService,
+                multi: true
+              }
+            ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
