@@ -1,0 +1,21 @@
+<div class="well">
+  <form (ngSubmit)="createUser()">
+    <div class="form-group">
+      <label for="username">Entrer un Nom d'utilisateur</label>
+      <input type="text"
+             class="form-control"
+             name="username"
+             id="username"
+             [(ngModel)]="userRegister.username"/>
+    </div>
+    <div class="form-group">
+        <label for="password">Entrer un Mot de Passe</label>
+        <input type="password"
+               class="form-control"
+               name="password"
+               id="password"
+               [(ngModel)]="userRegister.password"/>
+      </div>
+      <button class="btn btn-success" type="submit">Créer l'utilisateur</button>
+  </form>
+</div>

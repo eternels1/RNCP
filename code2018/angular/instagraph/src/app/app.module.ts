@@ -23,6 +23,8 @@ import { ImageUploadComponent } from './components/image-upload/image-upload.com
 import { TagRepositoryService } from './services/tag-repository.service';
 import { LoginComponent } from './components/login/login.component';
 import { AuthManagerService } from './services/auth-manager.service';
+import { UtilisateurInfoComponent } from './components/utilisateur-info/utilisateur-info.component';
+import { RegisterUserComponent } from './components/register-user/register-user.component';
 
 
 @NgModule({
@@ -32,7 +34,9 @@ import { AuthManagerService } from './services/auth-manager.service';
     ImageListComponent,
     TagSelectorComponent,
     ImageUploadComponent,
-    LoginComponent
+    LoginComponent,
+    UtilisateurInfoComponent,
+    RegisterUserComponent
   ],
   imports: [
     BrowserModule,
@@ -50,6 +54,7 @@ import { AuthManagerService } from './services/auth-manager.service';
       {path:'liste',component:ImageListComponent},
       {path:'upload',component:ImageUploadComponent},
       {path:'login',component:LoginComponent},
+      {path:'register',component:RegisterUserComponent},
       {path:'',redirectTo:'/liste',pathMatch:'full'}
     ])
   ],

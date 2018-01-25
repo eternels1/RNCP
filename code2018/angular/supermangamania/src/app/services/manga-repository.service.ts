@@ -73,7 +73,7 @@ export class MangaRepositoryService {
    }
 
    public findManga(id: number) : Promise<Manga>{
-     let url=`${this.baseUrl}mangas/${id}`;
+     let url=`${this.apiUrl}mangas/${id}`;
      return this._http.get<Manga>(url).toPromise();
    }
    public saveManga(manga : Manga): Promise<Manga>{
@@ -86,7 +86,7 @@ export class MangaRepositoryService {
      }
      else{
        //update
-       return this._http.put<Manga>(`${this.apiUrl}mangas`,manga,httpoptions).toPromise();
+       return this._http.put<Manga>(`${this.apiUrl}mangas/${manga.id}`,manga,httpoptions).toPromise();
      }
      
    }
@@ -95,7 +95,9 @@ export class MangaRepositoryService {
     return  `${this.baseUrl}/upload/${idSuperManga}`;
   }
    public deleteManga(id: number) : Promise<Manga>{
-    let url=`${this.apiUrl}mangas/${id}`;
-    return this._http.delete<Manga>(url).toPromise();
+    let url=`${this.baseUrl}delete`;
+    let params : HttpParams= new HttpParams();
+    params= params.set("mangaId",""+id);
+    return this._http.delete<Manga>(url,{params: params}).toPromise();
   }
 }

@@ -33,7 +33,8 @@ export class TagRepositoryService {
 
     this._http.get<Page<Tag>>(`${this.baseUrlExtendedAPi}/liste`,{params:urlparams})
               .toPromise()
-              .then(p=>this.tagsSubject.next(p));
+              .then(p=>this.tagsSubject.next(p))
+              .catch(e=> console.log("pas de tag recu"));
   }
 
   public setNoPage(no : number) : void {

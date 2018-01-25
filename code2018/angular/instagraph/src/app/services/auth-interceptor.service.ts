@@ -14,7 +14,7 @@ export class AuthInterceptorService implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpSentEvent | HttpHeaderResponse | 
   HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any>> {
     //AVANT envoie de la requette au serveur
-    console.log("requette intercepté: "+req.url);
+    //console.log("requette intercepté: "+req.url);
     if (this.authManager.isLoggedIn()) {
       req=req.clone({setHeaders:{
         Authorization: `Basic ${this.authManager.getCredentials()}`
@@ -32,6 +32,7 @@ export class AuthInterceptorService implements HttpInterceptor {
                                   this.router.navigateByUrl("/login");
                                 }
                               }
+                              //retransmition de l'erreur 
                               return Observable.throw(error);
     });
   //   pipe(evt => {

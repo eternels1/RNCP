@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthManagerService } from '../../services/auth-manager.service';
 import { Subscription } from 'rxjs/Subscription';
-import { HttpClient } from '@angular/common/http';
-import { Utilisateur } from '../../models/utilisateur';
+import { AuthManagerService } from '../../services/auth-manager.service';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { Utilisateur } from '../../metier/utilisateur';
 
 @Component({
   selector: 'app-login',
@@ -16,17 +16,10 @@ export class LoginComponent implements OnInit {
   private utilisateurSouscripton : Subscription;
   private baseUrlAPi:string="http://localhost:8080/extendedApi/auth";
 
-  constructor(private autManager:AuthManagerService, private _http: HttpClient, private router:Router) {
-
-    
-   }
+  constructor(private autManager: AuthManagerService, private _http: HttpClient, private router:Router ) { }
 
   ngOnInit() {
     this.userlogin={};
-    };
-
-  ngOnDestroy(){
-   
   }
 
   public trylogin():void{
@@ -41,4 +34,5 @@ export class LoginComponent implements OnInit {
                 this.router.navigateByUrl("/liste");
               });
   }
+
 }

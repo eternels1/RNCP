@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Utilisateur } from '../models/utilisateur';
+import { Utilisateur } from '../metier/utilisateur';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 
@@ -11,6 +10,11 @@ export class AuthManagerService {
 
   private currentUser: Utilisateur;
   private utilisateurSubject:Subject<[boolean,Utilisateur]>;
+
+  constructor() {
+    this.currentUser=null;
+    this.utilisateurSubject=new Subject<[boolean,Utilisateur]>();
+   }
 
   public getCurrentUser():Utilisateur{
     return this.currentUser;
@@ -33,7 +37,6 @@ export class AuthManagerService {
     return window.btoa(this.currentUser.username+":"+this.currentUser.password);
   }
 
-
   public getUtilisateurAsObservable():Observable<[boolean,Utilisateur]>{
     return this.utilisateurSubject.asObservable();
   }
@@ -43,15 +46,6 @@ export class AuthManagerService {
     //publication qu'il y a un user logger
     this.utilisateurSubject.next([true,this.currentUser]);
   }
-  
-
-  constructor() { 
-    this.currentUser=null;
-    this.utilisateurSubject=new Subject<[boolean,Utilisateur]>();
-  }
-
-
-
 
 
 }
