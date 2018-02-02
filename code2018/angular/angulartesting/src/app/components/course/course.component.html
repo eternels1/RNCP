@@ -1,0 +1,16 @@
+<table class="table table-striped">
+
+  <thead><th>Libelle</th><th>Quantité</th></thead>
+
+  <tbody>
+    <tr *ngFor="let course of coursesListe" class="courseelements">
+    <td>{{course[0]}}</td>
+    <td>{{course[1]}}</td>
+  </tr>
+
+  <td>
+    <button id="testAdd" (click)="addCourse()" class="btn btn-success">Ajouter une course!</button>
+    <button class="btn btn-danger" (click)="clearListeCourse()"> Vider la Liste!</button>
+  </td>
+  </tbody>
+  </table>
